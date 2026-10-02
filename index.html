@@ -1,0 +1,484 @@
+<title>Acolhimento PG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#F5F7F4;
+    --paper-raised:#FFFFFF;
+    --ink:#16211D;
+    --ink-soft:#4B5B54;
+    --line:#DBE3DD;
+    --line-strong:#C2CEC6;
+    --teal-deep:#1B5B54;
+    --teal-mid:#4C8078;
+    --teal-tint:#E4EDE9;
+    --gold:#B87E22;
+    --gold-tint:#F3E4C8;
+    --shadow: 0 1px 2px rgba(22,33,29,.06), 0 8px 24px -12px rgba(22,33,29,.18);
+
+    /* paleta de dados validada (dataviz skill) — vivida de propósito */
+    --chart-1:#2a78d6; /* azul      */
+    --chart-2:#eb6834; /* laranja   */
+    --chart-3:#1baf7a; /* verde-água*/
+    --chart-4:#eda100; /* âmbar     */
+    --chart-5:#e87ba4; /* magenta   */
+    --chart-6:#008300; /* verde     */
+    --chart-7:#4a3aa7; /* violeta   */
+    --chart-8:#e34948; /* vermelho  */
+    --chart-9:#0f7c8c;  /* petróleo  — setembro */
+    --chart-10:#a8541f; /* terracota — outubro  */
+    --chart-11:#5d6f1f; /* oliva     — novembro */
+    --chart-12:#7a2f5e; /* vinho     — dezembro */
+    --chart-grey:#898781; /* categoria residual / "sem informação" */
+    --age-1:#86b6ef; --age-2:#5598e7; --age-3:#2a78d6; --age-4:#1c5cab; --age-5:#0d366b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1613;
+      --paper-raised:#152520;
+      --ink:#EAF1EC;
+      --ink-soft:#9FB3AA;
+      --line:#22322C;
+      --line-strong:#324941;
+      --teal-deep:#57B0A2;
+      --teal-mid:#7FA79F;
+      --teal-tint:#16302B;
+      --gold:#E4A94F;
+      --gold-tint:#2E2313;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+      --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+      --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+      --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+      --chart-grey:#898781;
+      --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1613;
+    --paper-raised:#152520;
+    --ink:#EAF1EC;
+    --ink-soft:#9FB3AA;
+    --line:#22322C;
+    --line-strong:#324941;
+    --teal-deep:#57B0A2;
+    --teal-mid:#7FA79F;
+    --teal-tint:#16302B;
+    --gold:#E4A94F;
+    --gold-tint:#2E2313;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+    --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+    --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+    --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+    --chart-grey:#898781;
+    --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:40px 24px 64px;}
+
+  h1,h2,.num{font-family:'Fraunces', ui-serif, Georgia, serif; text-wrap:balance;}
+
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--teal-deep);
+  }
+
+  /* ===== masthead ===== */
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    padding-bottom:22px; border-bottom:1px solid var(--line-strong);
+    flex-wrap:wrap;
+  }
+  .masthead h1{font-size:34px; font-weight:560; margin:6px 0 8px; color:var(--ink);}
+  .masthead p{margin:0; color:var(--ink-soft); font-size:14.5px; max-width:52ch;}
+  .refresh-badge{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; color:var(--ink-soft); text-align:right;
+    white-space:nowrap;
+  }
+  .refresh-dot{width:7px; height:7px; border-radius:50%; background:var(--teal-deep); flex:none;}
+  .refresh-badge strong{color:var(--ink); font-weight:600;}
+
+  /* ===== funil ===== */
+  .funil{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; margin:28px 0 10px; box-shadow:var(--shadow);
+  }
+  .funil .tile{background:var(--paper-raised); padding:20px 18px; position:relative;}
+  .funil .tile .num{font-size:32px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .funil .tile .lbl{margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .funil .tile.accent .num{color:var(--teal-deep);}
+  .funil .tile.warn .num{color:var(--gold);}
+  .funil-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 36px;}
+  .funil-note b{color:var(--ink); font-weight:600;}
+
+  /* ===== section headers ===== */
+  section{margin-top:44px;}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px;}
+  .sec-head h2{font-size:20px; font-weight:520; margin:0;}
+  .sec-head .sec-sub{font-size:12.5px; color:var(--ink-soft);}
+
+  /* ===== trend chart card ===== */
+  .card{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .trend-legend{display:flex; gap:18px; font-size:12px; color:var(--ink-soft); margin-top:14px; flex-wrap:wrap;}
+  .trend-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+  #trendSvg{width:100%; height:auto; display:block; overflow:visible;}
+  #trendSvg text{font-family:'Work Sans', sans-serif; fill:var(--ink-soft);}
+
+  /* ===== grid of bar-list cards ===== */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:680px){ .grid2{grid-template-columns:1fr;} }
+
+  .barlist{display:flex; flex-direction:column; gap:10px;}
+  .barrow{display:grid; grid-template-columns:1fr auto; column-gap:10px; align-items:center;}
+  .barrow .label{font-size:13px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .barrow .value{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink); text-align:right; min-width:2.4ch;}
+  .track{grid-column:1/-1; height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .track .fill{height:100%; border-radius:4px;}
+
+  /* ===== perfil por mes ===== */
+  .month-row{display:grid; grid-template-columns:132px 1fr 88px; align-items:center; gap:12px; margin-bottom:9px;}
+  .month-row .mlabel{font-size:12.5px; color:var(--ink-soft);}
+  .month-row .mlabel .tag{font-size:10.5px; color:var(--gold); font-weight:600;}
+  .stackbar{display:flex; height:16px; border-radius:3px; overflow:hidden; background:var(--line);}
+  .stackbar span{height:100%;}
+  .seg-casal{background:var(--chart-1);}
+  .seg-solteiro{background:var(--chart-2);}
+  .seg-semi{background:var(--chart-grey);}
+  .estimate .seg-casal, .estimate .seg-solteiro, .estimate .seg-semi{opacity:.5;}
+  .month-row .mtotal{font-size:12.5px; text-align:right; color:var(--ink-soft); font-variant-numeric:tabular-nums;}
+  .stack-legend{display:flex; gap:16px; font-size:12px; color:var(--ink-soft); margin:14px 0 4px;}
+  .stack-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+
+  /* ===== chips (perfil rapido) ===== */
+  .chiprow{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:4px;}
+  @media (max-width:680px){ .chiprow{grid-template-columns:repeat(2,1fr);} }
+  .chip{background:var(--teal-tint); border-radius:8px; padding:14px 14px;}
+  .chip .num{font-size:22px; font-weight:520; color:var(--teal-deep); font-variant-numeric:tabular-nums;}
+  .chip .lbl{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
+
+  /* ===== geografia ===== */
+  .geo-row{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--line);}
+  .geo-row:last-child{border-bottom:none;}
+  .geo-row .gname{font-size:13px;}
+  .geo-row .gtrack{height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .geo-row .gtrack .fill{height:100%; background:var(--chart-3); border-radius:4px;}
+  .geo-row .gval{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; min-width:3ch; text-align:right;}
+  .geo-row .gdist{font-size:11.5px; color:var(--ink-soft); min-width:5ch; text-align:right;}
+  .geo-head{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; padding-bottom:8px; border-bottom:1px solid var(--line-strong);}
+  .geo-head .gdist{text-align:right;}
+  .geo-head .gval{text-align:right;}
+
+  footer{
+    margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
+      <h1>Acolhimento PG</h1>
+      <p>Painel público do funil de inscritos em "Faça Parte de um Pequeno Grupo" — da inscrição até a entrega a um líder.</p>
+    </div>
+    <div class="refresh-badge">
+      <span class="refresh-dot"></span>
+      <span>Atualizado em <strong id="snapshotDate">—</strong><br>Próxima atualização: toda sexta-feira</span>
+    </div>
+  </div>
+
+  <div class="funil" id="funilTiles"></div>
+  <p class="funil-note" id="funilNote"></p>
+
+  <section>
+    <div class="sec-head">
+      <h2>Inscrições por semana</h2>
+      <span class="sec-sub" id="trendSub">semanas com data de fechamento (domingo)</span>
+    </div>
+    <div class="card">
+      <svg id="trendSvg" viewBox="0 0 960 260" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="trend-legend" id="trendLegend"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Interesse e perfil etário</h2></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px;">Tipo de PG de maior interesse</div>
+        <div class="barlist" id="listInteresse"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px;">Faixa etária</div>
+        <div class="barlist" id="listFaixa"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Canal e disponibilidade</h2></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px;">Como souberam dos PGs</div>
+        <div class="barlist" id="listCanal"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px;">Melhores dias da semana</div>
+        <div class="barlist" id="listDias"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Perfil dos inscritos por mês</h2>
+      <span class="sec-sub">casais &times; solteiros/outros</span>
+    </div>
+    <div class="card">
+      <div id="stackMonths"></div>
+      <div class="stack-legend">
+        <span><span class="sw" style="background:var(--chart-1)"></span>Casal</span>
+        <span><span class="sw" style="background:var(--chart-2)"></span>Solteiro</span>
+        <span><span class="sw" style="background:var(--chart-grey)"></span>Sem informação</span>
+        <span style="color:var(--gold)">faixa mais clara = estimativa</span>
+      </div>
+      <div class="chiprow" id="chipRow"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Distribuição geográfica</h2>
+      <span class="sec-sub">da sede para fora · distância aproximada</span>
+    </div>
+    <div class="card">
+      <div class="geo-head"><span>Região</span><span></span><span class="gval">Inscritos</span><span class="gdist">Dist. sede</span></div>
+      <div id="geoList"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Fonte: base de acolhimento de Pequenos Grupos, Ibmorumbi. Números agregados — nenhum dado pessoal de inscrito aparece nesta página.</span>
+    <span id="footRefresh"></span>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"funil": {"total": 218, "com_lider": 204, "sem_lider": 0, "sem_pg": 3, "sem_resposta": 11}, "interesse": [{"label": "Adultos", "value": 102}, {"label": "Mulheres", "value": 73}, {"label": "Família", "value": 54}, {"label": "Jovens", "value": 54}, {"label": "PG solteiros, divorciados e viúvos", "value": 52}, {"label": "Esportivo", "value": 40}, {"label": "Casais", "value": 40}, {"label": "Casais Jovens", "value": 26}, {"label": "Homens", "value": 20}, {"label": "Noivos", "value": 4}], "faixa_etaria": [{"label": "Até 20 anos", "value": 7}, {"label": "21 a 30 anos", "value": 43}, {"label": "31 a 40 anos", "value": 72}, {"label": "41 a 50 anos", "value": 45}, {"label": "51+ anos", "value": 27}], "como_soube": [{"label": "Culto", "value": 155}, {"label": "App", "value": 41}, {"label": "Indicação", "value": 33}, {"label": "Instagram", "value": 23}, {"label": "Site/Outros", "value": 8}, {"label": "WhatsApp", "value": 4}], "melhores_dias": [{"label": "Domingo", "value": 75}, {"label": "Segunda-feira", "value": 55}, {"label": "Terça-feira", "value": 75}, {"label": "Quarta-feira", "value": 105}, {"label": "Quinta-feira", "value": 85}, {"label": "Sexta-feira", "value": 101}, {"label": "Sábado", "value": 114}], "perfil": {"com_filhos": 115, "com_filhos_pct": 0.5275229357798165, "fez_membresia": 57, "fez_membresia_pct": 0.26146788990825687, "sao_paulo": 166, "sao_paulo_pct": 0.7614678899082569}, "resumo": {"pessoas_atendidas": 517}, "geografia": [{"regiao": "Morumbi / Vila Andrade (sede)", "inscritos": 69, "dist_km": 0}, {"regiao": "Paraisópolis / Vila Sônia", "inscritos": 12, "dist_km": 1.9}, {"regiao": "Campo Limpo / Capão Redondo / Jd. São Luís", "inscritos": 31, "dist_km": 4.3}, {"regiao": "Santo Amaro / Brooklin / Jabaquara", "inscritos": 27, "dist_km": 4.9}, {"regiao": "Butantã / Jaguaré (Zona Oeste)", "inscritos": 9, "dist_km": 5.8}, {"regiao": "Taboão da Serra", "inscritos": 16, "dist_km": 6.4}, {"regiao": "Interlagos / Grajaú / Guarapiranga", "inscritos": 4, "dist_km": 7.6}, {"regiao": "Outras regiões de SP", "inscritos": 6, "dist_km": 9.7}, {"regiao": "Embu / Itapecerica da Serra", "inscritos": 2, "dist_km": 12.7}, {"regiao": "Barueri / Alphaville", "inscritos": 2, "dist_km": 18}, {"regiao": "Cotia", "inscritos": 1, "dist_km": 19.5}, {"regiao": "Bairro não informado", "inscritos": 11, "dist_km": null}, {"regiao": "Verificar endereço", "inscritos": 28, "dist_km": null}], "perfil_mes": [{"mes": "Janeiro (estimativa)", "casal": 9, "solteiro": 7, "sem_info": 0, "estimativa": true}, {"mes": "Fevereiro (estimativa)", "casal": 12, "solteiro": 9, "sem_info": 1, "estimativa": true}, {"mes": "Março", "casal": 19, "solteiro": 16, "sem_info": 0, "estimativa": false}, {"mes": "Abril", "casal": 11, "solteiro": 21, "sem_info": 1, "estimativa": false}, {"mes": "Maio", "casal": 16, "solteiro": 13, "sem_info": 0, "estimativa": false}, {"mes": "Junho", "casal": 19, "solteiro": 11, "sem_info": 1, "estimativa": false}, {"mes": "Julho", "casal": 20, "solteiro": 13, "sem_info": 1, "estimativa": false}, {"mes": "Agosto", "casal": 18, "solteiro": 10, "sem_info": 1, "estimativa": false}, {"mes": "Setembro", "casal": 15, "solteiro": 7, "sem_info": 0, "estimativa": false}], "weekly": [{"month_label": "jan (16) — estimativa", "month_key": "jan", "count": 2, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 6, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 7, "estimativa": true}, {"month_label": "fev (22) — estimativa", "month_key": "fev", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": "mar (37)", "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 16, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 5, "estimativa": false}, {"month_label": "abr (32)", "month_key": "abr", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 12, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": "mai (30)", "month_key": "mai", "count": 2, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 11, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 6, "estimativa": false}, {"month_label": "jun (30)", "month_key": "jun", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 10, "estimativa": false}, {"month_label": "jul (35)", "month_key": "jul", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 14, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 9, "estimativa": false}, {"month_label": "ago (27)", "month_key": "ago", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": "set (22)", "month_key": "set", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 7, "estimativa": false}], "snapshot_date_br": "02/10/2026", "snapshot_date_iso": "2026-10-02"};
+
+function fmtInt(n){ return new Intl.NumberFormat('pt-BR').format(n); }
+function fmtPct(x){ return (x*100).toLocaleString('pt-BR',{maximumFractionDigits:1}) + '%'; }
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+
+document.getElementById('snapshotDate').textContent = DATA.snapshot_date_br;
+document.getElementById('footRefresh').textContent = 'Atualização automática semanal · gerado em ' + DATA.snapshot_date_br;
+
+// ---- funil tiles ----
+(function(){
+  const wrap = document.getElementById('funilTiles');
+  const f = DATA.funil;
+  const tiles = [
+    {n:f.total, l:'inscritos totais', cls:''},
+    {n:f.com_lider, l:'com líder atribuído', cls:'accent'},
+    {n:f.sem_lider, l:'aguardando líder', cls: f.sem_lider>0 ? 'warn':''},
+    {n:f.sem_pg, l:'sem PG, por opção do inscrito', cls:''},
+  ];
+  tiles.forEach(t=>{
+    const d = el('div','tile'+(t.cls?' '+t.cls:''));
+    d.appendChild(el('div','num', fmtInt(t.n)));
+    d.appendChild(el('div','lbl', t.l));
+    wrap.appendChild(d);
+  });
+  document.getElementById('funilNote').innerHTML =
+    '<b>'+fmtInt(f.sem_resposta)+' sem resposta do inscrito</b> — contatados pelo acolhimento, sem retorno da pessoa até agora; não é gargalo do acolhimento e não entra no total de "aguardando líder". Confere: '+
+    fmtInt(f.total)+' = '+fmtInt(f.com_lider)+' + '+fmtInt(f.sem_lider)+' + '+fmtInt(f.sem_pg)+' + '+fmtInt(f.sem_resposta)+'.';
+})();
+
+// ---- cores fixas por categoria (a cor segue a entidade, nunca o rank —
+// ver dataviz skill: um filtro/reordenação não pode repintar quem sobra) ----
+const PG_COLOR = {
+  'Adultos':'var(--chart-1)', 'Mulheres':'var(--chart-2)', 'Família':'var(--chart-3)',
+  'PG solteiros, divorciados e viúvos':'var(--chart-4)', 'Jovens':'var(--chart-5)',
+  'Esportivo':'var(--chart-6)', 'Casais':'var(--chart-7)', 'Casais Jovens':'var(--chart-8)',
+};
+const CANAL_COLOR = {
+  'Culto':'var(--chart-1)', 'App':'var(--chart-2)', 'Indicação':'var(--chart-3)',
+  'Instagram':'var(--chart-4)', 'WhatsApp':'var(--chart-5)', 'Site/Outros':'var(--chart-6)',
+};
+
+// ---- generic bar list ----
+function renderBarList(containerId, items, colorFn){
+  const wrap = document.getElementById(containerId);
+  const max = Math.max(...items.map(i=>i.value), 1);
+  items.forEach((i,idx)=>{
+    const row = el('div','barrow');
+    row.appendChild(el('div','label', i.label));
+    row.appendChild(el('div','value', fmtInt(i.value)));
+    const track = el('div','track');
+    const fill = el('div','fill');
+    fill.style.width = (i.value/max*100).toFixed(1)+'%';
+    fill.style.background = colorFn ? colorFn(i,idx) : 'var(--chart-1)';
+    track.appendChild(fill);
+    row.appendChild(track);
+    wrap.appendChild(row);
+  });
+}
+renderBarList('listInteresse', DATA.interesse, i => PG_COLOR[i.label] || 'var(--chart-grey)');
+renderBarList('listFaixa', DATA.faixa_etaria, (i,idx) => `var(--age-${idx+1})`);
+renderBarList('listCanal', DATA.como_soube, i => CANAL_COLOR[i.label] || 'var(--chart-grey)');
+renderBarList('listDias', DATA.melhores_dias, () => 'var(--chart-7)');
+
+// ---- perfil por mes (stacked) ----
+(function(){
+  const wrap = document.getElementById('stackMonths');
+  const rows = DATA.perfil_mes;
+  const maxTotal = Math.max(...rows.map(r=>r.casal+r.solteiro+r.sem_info), 1);
+  rows.forEach(r=>{
+    const total = r.casal + r.solteiro + r.sem_info;
+    const row = el('div','month-row'+(r.estimativa?' estimate':''));
+    const lbl = el('div','mlabel', r.mes.replace(' (estimativa)','') + (r.estimativa? ' <span class="tag">est.</span>':''));
+    row.appendChild(lbl);
+    const bar = el('div','stackbar');
+    bar.style.width = (total/maxTotal*100).toFixed(1)+'%';
+    if(r.casal) bar.appendChild(Object.assign(el('span','seg-casal'),{style:`width:${r.casal/total*100}%`}));
+    if(r.solteiro) bar.appendChild(Object.assign(el('span','seg-solteiro'),{style:`width:${r.solteiro/total*100}%`}));
+    if(r.sem_info) bar.appendChild(Object.assign(el('span','seg-semi'),{style:`width:${r.sem_info/total*100}%`}));
+    row.appendChild(bar);
+    row.appendChild(el('div','mtotal', fmtInt(total)+' fichas'));
+    wrap.appendChild(row);
+  });
+  const chips = document.getElementById('chipRow');
+  const p = DATA.perfil;
+  const chipData = [
+    {n:fmtInt(p.com_filhos), l:'com filhos ('+fmtPct(p.com_filhos_pct)+')'},
+    {n:fmtInt(p.fez_membresia), l:'já fizeram membresia ('+fmtPct(p.fez_membresia_pct)+')'},
+    {n:fmtInt(p.sao_paulo), l:'moram em São Paulo ('+fmtPct(p.sao_paulo_pct)+')'},
+    {n:fmtInt(DATA.resumo.pessoas_atendidas), l:'pessoas alcançadas pelas fichas'},
+  ];
+  chipData.forEach(c=>{
+    const d = el('div','chip');
+    d.appendChild(el('div','num', c.n));
+    d.appendChild(el('div','lbl', c.l));
+    chips.appendChild(d);
+  });
+})();
+
+// ---- geografia ----
+(function(){
+  const wrap = document.getElementById('geoList');
+  const rows = DATA.geografia;
+  const max = Math.max(...rows.map(r=>r.inscritos),1);
+  rows.forEach(r=>{
+    const row = el('div','geo-row');
+    row.appendChild(el('div','gname', r.regiao));
+    const track = el('div','gtrack');
+    const fill = el('div','fill'); fill.style.width=(r.inscritos/max*100).toFixed(1)+'%';
+    track.appendChild(fill);
+    row.appendChild(track);
+    row.appendChild(el('div','gval', fmtInt(r.inscritos)));
+    row.appendChild(el('div','gdist', r.dist_km!=null ? r.dist_km.toLocaleString('pt-BR',{maximumFractionDigits:1})+' km' : '—'));
+    wrap.appendChild(row);
+  });
+})();
+
+// ---- weekly trend SVG: barras por semana, uma cor fixa por mês (calendário,
+// nunca por rank), sem linha de tendência ----
+const MONTH_ORDER = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MONTH_COLOR = {};
+// uma cor por mês do calendário, o ano todo. Antes, de setembro em diante tudo caía
+// no cinza — que é a cor de "sem informação", e não a de um mês.
+MONTH_ORDER.forEach((m,i)=>{ MONTH_COLOR[m] = `var(--chart-${i+1})`; });
+
+(function(){
+  const svg = document.getElementById('trendSvg');
+  const W = 960, H = 260, padL = 34, padR = 14, padT = 16, padB = 34;
+  const weeks = DATA.weekly;
+  const n = weeks.length;
+  const maxV = Math.max(...weeks.map(w=>w.count), 1) * 1.15;
+  const step = (W-padL-padR) / n;
+  const xSlot = i => padL + step*i;      // borda esquerda da semana i
+  const x = i => xSlot(i) + step/2;      // centro da semana i
+  const y = v => padT + (1 - v/maxV) * (H-padT-padB);
+  const y0 = y(0);
+
+  const ns = 'http://www.w3.org/2000/svg';
+  function make(tag, attrs){ const e=document.createElementNS(ns,tag); for(const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+
+  // gridlines + y labels
+  const ticks = 4;
+  for(let t=0;t<=ticks;t++){
+    const v = maxV/ticks*t;
+    const yy = y(v);
+    svg.appendChild(make('line',{x1:padL,x2:W-padR,y1:yy,y2:yy,stroke:'var(--line)','stroke-width':1}));
+    const lab = make('text',{x:padL-8,y:yy+4,'text-anchor':'end','font-size':10});
+    lab.textContent = Math.round(v);
+    svg.appendChild(lab);
+  }
+
+  // month bands / labels
+  let lastMonth = null;
+  weeks.forEach((w,i)=>{
+    if(w.month_label && w.month_label !== lastMonth){
+      lastMonth = w.month_label;
+      const xx = xSlot(i);
+      svg.appendChild(make('line',{x1:xx,x2:xx,y1:padT,y2:H-padB,stroke:'var(--line)','stroke-width':1,'stroke-dasharray':'2,3'}));
+      const lab = make('text',{x:xx+3,y:H-padB+16,'font-size':10,'text-anchor':'start'});
+      lab.textContent = w.month_label.replace(' — estimativa','').replace(/\s*\(.*\)/,'');
+      svg.appendChild(lab);
+    }
+  });
+
+  // barras — dado bruto, semana a semana; cor por mês, opacidade menor = estimativa
+  const barW = Math.max(step*0.6, 3);
+  weeks.forEach((w,i)=>{
+    const by = y(w.count);
+    svg.appendChild(make('rect',{
+      x:(x(i)-barW/2).toFixed(1), y:by.toFixed(1), width:barW.toFixed(1), height:Math.max(y0-by,0).toFixed(1),
+      rx:1.5, fill: MONTH_COLOR[w.month_key] || 'var(--chart-1)', 'fill-opacity': w.estimativa ? '.45' : '.85',
+    }));
+  });
+
+  // ---- linha da média: uma RETA horizontal ----
+  const reais = weeks.filter(w=>!w.estimativa);
+  if (reais.length){
+    const media = reais.reduce((s,w)=>s+w.count,0)/reais.length;
+    const ym = y(media);
+    svg.appendChild(make('line',{
+      x1:padL, x2:W-padR, y1:ym, y2:ym,
+      stroke:'var(--ink-soft)','stroke-width':1.5,'stroke-dasharray':'6,4','stroke-opacity':.75
+    }));
+    const cap = make('text',{x:W-padR-4,y:ym-6,'text-anchor':'end','font-size':10.5});
+    cap.textContent = 'média das semanas com dado real: ' + media.toLocaleString('pt-BR',{maximumFractionDigits:1});
+    svg.appendChild(cap);
+  }
+
+  // legenda: uma cor por mês presente no gráfico, na ordem do calendário
+  const legend = document.getElementById('trendLegend');
+  const monthsSeen = [...new Set(weeks.map(w=>w.month_key))].filter(Boolean)
+    .sort((a,b)=>MONTH_ORDER.indexOf(a)-MONTH_ORDER.indexOf(b));
+  const monthName = {jan:'Jan',fev:'Fev',mar:'Mar',abr:'Abr',mai:'Mai',jun:'Jun',jul:'Jul',ago:'Ago',set:'Set',out:'Out',nov:'Nov',dez:'Dez'};
+  monthsSeen.forEach(mk=>{
+    const isEst = weeks.some(w=>w.month_key===mk && w.estimativa);
+    const item = el('span');
+    const sw = el('span','sw'); sw.style.background = MONTH_COLOR[mk]; sw.style.opacity = isEst ? '.45' : '.85';
+    item.appendChild(sw);
+    item.append(monthName[mk] || mk, isEst ? ' (estimativa)' : '');
+    legend.appendChild(item);
+  });
+})();
+</script>
