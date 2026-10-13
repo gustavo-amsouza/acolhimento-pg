@@ -376,8 +376,7 @@ document.getElementById('footRefresh').textContent = 'Atualização automática 
   const tiles = [
     {n:f.total, l:'inscritos totais', cls:''},
     {n:f.com_lider, l:'com líder atribuído', cls:'accent'},
-    {n:f.sem_lider, l:'inscritos sem indicação para um PG', cls: f.sem_lider>0 ? 'warn':'',
-     sub: f.sem_lider===0 ? 'Todos os inscritos já foram contatados e encaminhados a um PG' : ''},
+    {n:f.sem_lider, l:'inscritos sem indicação para um PG', cls: f.sem_lider>0 ? 'warn':''},
     {n:f.sem_pg, l:'sem PG, por opção do inscrito', cls:''},
   ];
   tiles.forEach(t=>{
