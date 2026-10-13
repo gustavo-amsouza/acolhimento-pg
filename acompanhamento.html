@@ -352,7 +352,6 @@
         <span class="big" id="hPgPct">—</span>
         <span class="of" id="hPgOf"></span>
       </div>
-      <div style="margin-top:12px" id="hPgChip"></div>
       <div class="scale" id="pgScale">
         <div class="scale-bar">
           <span style="background:var(--st-1)"></span><span style="background:var(--st-2)"></span>
@@ -483,7 +482,6 @@ document.getElementById('leadNote').innerHTML =
   const t = D.pgs.total, r = D.pgs.responderam, p = fmtPct(r, t);
   document.getElementById('hPgPct').textContent = p + '%';
   document.getElementById('hPgOf').innerHTML = `<b>${r}</b> de ${t} PGs`;
-  document.getElementById('hPgChip').innerHTML = chip(p);
   const pin = document.getElementById('pgPin');
   pin.style.left = Math.max(0.5, Math.min(99.5, p)) + '%';
   const segs = document.querySelectorAll('#pgScale .scale-bar span');
