@@ -188,6 +188,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/leaflet/leaflet.css">
+<script src="assets/mapa-base.js"></script>
 <style>
   /* ===== mapa: estilos próprios (o resto vem do painel de inscrições) ===== */
   .kpi4{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px;
@@ -223,6 +224,13 @@
   .leaflet-popup-content li{padding:5px 0; border-top:1px solid var(--line);}
   .leaflet-popup-content li small{display:block; color:var(--ink-soft); font-size:11.5px;}
   .leaflet-container{font-family:'Work Sans', sans-serif;}
+  /* rótulos do fundo do mapa */
+  .rot span{position:absolute; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; text-align:center;
+    font:600 9.5px/1.1 'Work Sans', sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); opacity:.75;
+    text-shadow:0 0 3px var(--paper-raised), 0 0 3px var(--paper-raised);}
+  .rot-m span{font-size:10.5px; letter-spacing:.03em; text-transform:none; font-style:italic; opacity:.9; text-shadow:0 0 3px var(--paper), 0 0 3px var(--paper);}
+  .longe .rot-d span{display:none;}
+  .leaflet-container .leaflet-control-attribution{font-size:10px; background:var(--paper-raised); color:var(--ink-soft); opacity:.85;}
   .leaflet-container a.leaflet-popup-close-button{color:var(--ink-soft);}
   .leaflet-tooltip{background:var(--ink); color:var(--paper-raised); border:none; font:12px 'Work Sans', sans-serif; box-shadow:none;}
   .leaflet-tooltip-top:before{border-top-color:var(--ink);}
@@ -407,10 +415,27 @@ const GRUPO = s => ({'Família':'Família e adultos','Casais':'Casais','Noivos':
 // ---- mapa
 const escuro = matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light';
 const mapa = L.map('mapa', {scrollWheelZoom:false, zoomControl:true}).setView([D.pontos.sede.lat, D.pontos.sede.lng], 12);
-L.tileLayer(`https://{s}.basemaps.cartocdn.com/${escuro ? 'dark_all' : 'light_all'}/{z}/{x}/{y}{r}.png`, {
-  maxZoom: 18, subdomains: 'abcd',
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+// fundo próprio: distritos de SP e municípios vizinhos (assets/mapa-base.js), sem imagens de terceiros
+const cor = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+mapa.createPane('base'); mapa.getPane('base').style.zIndex = 200;
+mapa.createPane('rotulos'); mapa.getPane('rotulos').style.zIndex = 450; mapa.getPane('rotulos').style.pointerEvents = 'none';
+const rotulos = [];
+L.geoJSON(window.MAPA_BASE, {
+  pane: 'base', interactive: false,
+  style: f => f.properties.t === 'd'
+    ? {color: cor('--line-strong') || '#B9C6BE', weight: 1, fillColor: cor('--paper-raised') || '#fff', fillOpacity: 1}
+    : {color: cor('--line-strong') || '#B9C6BE', weight: 1.4, fillColor: cor('--paper') || '#F5F7F4', fillOpacity: 1, dashArray: '4 3'},
+  onEachFeature: (f, camada) => rotulos.push([f.properties, camada])
 }).addTo(mapa);
+const camadaRot = L.layerGroup().addTo(mapa);
+rotulos.forEach(([p, camada]) => {
+  L.marker(camada.getCenter(), {pane: 'rotulos', interactive: false, keyboard: false,
+    icon: L.divIcon({className: 'rot ' + (p.t === 'd' ? 'rot-d' : 'rot-m'), html: `<span>${esc(p.n)}</span>`, iconSize: [0, 0]})
+  }).addTo(camadaRot);
+});
+const ajustaRotulos = () => mapa.getContainer().classList.toggle('longe', mapa.getZoom() < 12);
+mapa.on('zoomend', ajustaRotulos); ajustaRotulos();
+mapa.attributionControl.setPrefix(false).addAttribution('Distritos: GeoSampa/Prefeitura de SP · Municípios: IBGE');
 
 // membros: um círculo por região, área proporcional à quantidade
 const camadaMem = L.layerGroup();
