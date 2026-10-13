@@ -242,8 +242,8 @@
   .lg-row small{display:block; font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
 
   /* blocos de números (itens 3, 4, 5 e ajuda do pastor) */
-  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:var(--shadow);}
-  @media (max-width:760px){ .kpis{grid-template-columns:1fr 1fr;} }
+  .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:var(--shadow);}
+  @media (max-width:760px){ .kpis{grid-template-columns:1fr 1fr;} .kpis .kpi:last-child:nth-child(odd){grid-column:1/-1;} }
   .kpi{background:var(--paper-raised); padding:18px 18px 16px; display:flex; flex-direction:column;}
   .kpi .k-ico{width:30px; height:30px; border-radius:8px; display:grid; place-items:center; margin-bottom:12px; background:var(--teal-tint); color:var(--teal-deep);}
   .kpi .k-ico svg{width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round;}
@@ -300,7 +300,7 @@
 
 <div class="wrap">
 
-<!-- ABAS:INICIO (gerado por inserir_abas.py; mesmo bloco em todas as páginas do painel) -->
+  <!-- ABAS:INICIO (gerado por inserir_abas.py; mesmo bloco em todas as páginas do painel) -->
 <style>
   .abas{display:flex; gap:4px; padding:4px; margin:0 0 26px; background:var(--paper-raised); border:1px solid var(--line);
     border-radius:12px; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
@@ -337,9 +337,6 @@
 </nav>
 <!-- ABAS:FIM -->
 
-
-  
-
   <div class="masthead">
     <div>
       <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos <span class="beta" title="Esta página é nova e ainda está sendo ajustada. Pode mudar nas próximas semanas.">Página nova &middot; em construção</span></div>
@@ -373,7 +370,7 @@
     </div>
 
     <div class="card hero">
-      <div class="eyebrow">Inscritos que já estão firmes em um PG</div>
+      <div class="eyebrow">Encaminhados que já estão firmes em um PG</div>
       <div class="hero-row">
         <span class="big" id="hInPg">—</span>
         <span class="of" id="hInPgOf"></span>
@@ -382,11 +379,11 @@
     </div>
   </div>
 
-  <!-- 2: os 100% dos inscritos -->
+  <!-- 2: os 100% dos encaminhados aos líderes -->
   <section>
     <div class="sec-head">
-      <h2>Onde estão os <span id="totIns">—</span> inscritos</h2>
-      <span class="sec-sub">100% dos inscritos, qualquer que seja o PG</span>
+      <h2>Onde estão os <span id="totIns">—</span> encaminhados aos líderes</h2>
+      <span class="sec-sub">100% de quem tem líder atribuído, qualquer que seja o PG</span>
     </div>
     <div class="card">
       <div class="stack100" id="stack100" role="img"></div>
@@ -432,8 +429,8 @@
       <dl class="defs">
         <dt>Firmes em um PG</dt><dd>O líder marcou “Integrado ao PG” ou que a pessoa está frequentando (sempre ou às vezes). Vale o PG que for, mesmo que não seja o primeiro indicado.</dd>
         <dt>Foram ao PG, mas não firmaram</dt><dd>Foram pelo menos uma vez e depois pararam de ir.</dd>
-        <dt>Não responderam ao 1º contato da igreja</dt><dd>Inscritos que não responderam ao acolhimento e por isso ainda não foram encaminhados a um líder.</dd>
-        <dt>Não responderam ao 2º contato, o do líder</dt><dd>Depois do acolhimento, o 2º contato é o do líder do PG. O líder marcou “Sem resposta” ou que a pessoa não respondeu ao primeiro contato dele.</dd>
+        <dt>Quem entra nesta página</dt><dd>Só os inscritos com líder atribuído. Quem não respondeu ao acolhimento ou disse ao acolhimento que não quer PG agora fica com o pastor e não passa por esta etapa.</dd>
+        <dt>Não responderam ao líder</dt><dd>O líder marcou “Sem resposta” ou que a pessoa não respondeu ao primeiro contato dele.</dd>
         <dt>Ainda sem anotação do líder</dt><dd>Encaminhados a um PG cuja linha na planilha ainda está em branco. É a parte que mais muda conforme os líderes preenchem.</dd>
         <dt>Pessoas, não linhas</dt><dd>Quem foi indicado a dois ou três PGs conta uma vez só; vale a melhor notícia entre as planilhas.</dd>
       </dl>
@@ -448,7 +445,7 @@
 <div id="tip" role="tooltip"></div>
 
 <script>
-const D = {"hoje_br": "13/10/2026", "pgs": {"total": 28, "responderam": 7}, "por_pg": [{"pg": "PG Cristiformes - LR", "total": 22, "feitas": 22}, {"pg": "PG Mulheres - A", "total": 3, "feitas": 3}, {"pg": "PG Familia e Adultos - LM", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - Moema", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - WS", "total": 2, "feitas": 2}, {"pg": "PG Homens Guerreiros", "total": 1, "feitas": 1}, {"pg": "PG Familia e Adultos - KP", "total": 2, "feitas": 1}, {"pg": "PG Deus Conosco", "total": 36, "feitas": 0}, {"pg": "PG Adultos e Familia - L", "total": 26, "feitas": 0}, {"pg": "PG Adultos e Familia Vitória", "total": 25, "feitas": 0}, {"pg": "PG Mulheres Oração (quinta-feira)", "total": 17, "feitas": 0}, {"pg": "Min. Jovens (triagem)", "total": 16, "feitas": 0}, {"pg": "Min. de Casais (triagem)", "total": 15, "feitas": 0}, {"pg": "PG Adultos (Oração)", "total": 14, "feitas": 0}, {"pg": "PG Familia e Adultos - VA", "total": 13, "feitas": 0}, {"pg": "PG Familia Kids - AS", "total": 9, "feitas": 0}, {"pg": "PG Conexão", "total": 7, "feitas": 0}, {"pg": "PG Familia e Adultos - MC", "total": 7, "feitas": 0}, {"pg": "PG Casais - Efatá", "total": 6, "feitas": 0}, {"pg": "PG Noivos e Recém-Casados", "total": 4, "feitas": 0}, {"pg": "PG Jovens (25 a 30 anos)", "total": 3, "feitas": 0}, {"pg": "PG Familia e Adultos - CT", "total": 2, "feitas": 0}, {"pg": "PG Homens - A", "total": 2, "feitas": 0}, {"pg": "PG Homens - Quarta-feira - LG", "total": 2, "feitas": 0}, {"pg": "PG Homens Online - HA", "total": 2, "feitas": 0}, {"pg": "EPA (pré-adolescentes)", "total": 1, "feitas": 0}, {"pg": "PG Homens (quintas)", "total": 1, "feitas": 0}, {"pg": "PG Mulheres - S", "total": 1, "feitas": 0}], "encaminhamentos": {"total": 243, "feitas": 33}, "pessoas_nas_planilhas": 200, "com_retorno": 31, "inscritos": 222, "blocos": {"em_pg": 8, "visitou": 3, "acompanhamento": 6, "outro_pg": 3, "sem_resposta_lider": 11, "nao_agora": 3, "sem_resposta_igreja": 11, "aguardando": 177}, "funil_lider": {"com_retorno": 31, "respondeu": 28, "foi": 11, "em_pg": 8}, "espera": {"ate30": 35, "30a90": 36, "mais90": 125, "sem_data": 14}, "ajuda_pastor": 5};
+const D = {"hoje_br": "13/10/2026", "pgs": {"total": 28, "responderam": 7}, "por_pg": [{"pg": "PG Cristiformes - LR", "total": 22, "feitas": 22}, {"pg": "PG Mulheres - A", "total": 3, "feitas": 3}, {"pg": "PG Familia e Adultos - LM", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - Moema", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - WS", "total": 2, "feitas": 2}, {"pg": "PG Homens Guerreiros", "total": 1, "feitas": 1}, {"pg": "PG Familia e Adultos - KP", "total": 2, "feitas": 1}, {"pg": "PG Deus Conosco", "total": 36, "feitas": 0}, {"pg": "PG Adultos e Familia - L", "total": 26, "feitas": 0}, {"pg": "PG Adultos e Familia Vitória", "total": 25, "feitas": 0}, {"pg": "PG Mulheres Oração (quinta-feira)", "total": 17, "feitas": 0}, {"pg": "Min. Jovens (triagem)", "total": 16, "feitas": 0}, {"pg": "Min. de Casais (triagem)", "total": 15, "feitas": 0}, {"pg": "PG Adultos (Oração)", "total": 14, "feitas": 0}, {"pg": "PG Familia e Adultos - VA", "total": 13, "feitas": 0}, {"pg": "PG Familia Kids - AS", "total": 9, "feitas": 0}, {"pg": "PG Conexão", "total": 7, "feitas": 0}, {"pg": "PG Familia e Adultos - MC", "total": 7, "feitas": 0}, {"pg": "PG Casais - Efatá", "total": 6, "feitas": 0}, {"pg": "PG Noivos e Recém-Casados", "total": 4, "feitas": 0}, {"pg": "PG Jovens (25 a 30 anos)", "total": 3, "feitas": 0}, {"pg": "PG Familia e Adultos - CT", "total": 2, "feitas": 0}, {"pg": "PG Homens - A", "total": 2, "feitas": 0}, {"pg": "PG Homens - Quarta-feira - LG", "total": 2, "feitas": 0}, {"pg": "PG Homens Online - HA", "total": 2, "feitas": 0}, {"pg": "EPA (pré-adolescentes)", "total": 1, "feitas": 0}, {"pg": "PG Homens (quintas)", "total": 1, "feitas": 0}, {"pg": "PG Mulheres - S", "total": 1, "feitas": 0}], "encaminhamentos": {"total": 243, "feitas": 33}, "pessoas_nas_planilhas": 200, "com_retorno": 31, "inscritos": 208, "blocos": {"em_pg": 8, "visitou": 3, "acompanhamento": 6, "outro_pg": 3, "sem_resposta_lider": 11, "nao_agora": 0, "aguardando": 177}, "funil_lider": {"com_retorno": 31, "respondeu": 28, "foi": 11, "em_pg": 8}, "espera": {"ate30": 35, "30a90": 36, "mais90": 125, "sem_data": 14}, "ajuda_pastor": 5};
 
 const fmtPct = (n, d) => d ? Math.round(100 * n / d) : 0;
 const pctTxt = (n, d) => fmtPct(n, d).toLocaleString('pt-BR') + '%';
@@ -503,7 +500,7 @@ document.getElementById('leadNote').innerHTML =
 (function(){
   const b = D.blocos, ins = D.inscritos;
   document.getElementById('hInPg').textContent = pctTxt(b.em_pg, ins);
-  document.getElementById('hInPgOf').innerHTML = `<b>${num(b.em_pg)}</b> de ${num(ins)} inscritos`;
+  document.getElementById('hInPgOf').innerHTML = `<b>${num(b.em_pg)}</b> de ${num(ins)} encaminhados`;
   document.getElementById('hInPgExpl').innerHTML =
     `Entre as ${num(D.com_retorno)} pessoas que os líderes já anotaram, <b style="color:var(--ink)">${pctTxt(b.em_pg, D.com_retorno)}</b> estão firmes em um PG. ` +
     `O número total vai subir conforme as outras planilhas forem preenchidas.`;
@@ -518,9 +515,8 @@ document.getElementById('leadNote').innerHTML =
     {k:'visitou',   cor:'var(--cat-visita)',   rot:'Foram ao PG, mas não firmaram', v:b.visitou},
     {k:'conversa',  cor:'var(--cat-conversa)', rot:'Em conversa com o líder ou mudando de PG', v:b.acompanhamento + b.outro_pg,
        sub:`${num(b.acompanhamento)} em acompanhamento · ${num(b.outro_pg)} escolheram outro PG ou horário`},
-    {k:'semresp',   cor:'var(--cat-semresp)',  rot:'Não responderam', v:b.sem_resposta_igreja + b.sem_resposta_lider,
-       sub:`${num(b.sem_resposta_igreja)} à igreja · ${num(b.sem_resposta_lider)} ao líder`},
-    {k:'naoagora',  cor:'var(--cat-naoagora)', rot:'Disseram que não querem PG agora', v:b.nao_agora},
+    {k:'semresp',   cor:'var(--cat-semresp)',  rot:'Não responderam ao líder', v:b.sem_resposta_lider},
+    {k:'naoagora',  cor:'var(--cat-naoagora)', rot:'Disseram ao líder que não querem PG agora', v:b.nao_agora},
     {k:'aguarda',   cor:'var(--cat-aguarda)',  rot:'Ainda sem anotação do líder', v:b.aguardando},
   ];
   const bar = document.getElementById('stack100'), leg = document.getElementById('legend100');
@@ -528,7 +524,7 @@ document.getElementById('leadNote').innerHTML =
   GRUPOS.forEach(g => {
     if (g.v > 0){
       const s = el('span'); s.style.flex = g.v; s.style.background = g.cor;
-      bindTip(s, `<b>${g.rot}</b><br>${num(g.v)} inscritos · ${pctTxt(g.v, tot)}`);
+      bindTip(s, `<b>${g.rot}</b><br>${num(g.v)} pessoas · ${pctTxt(g.v, tot)}`);
       bar.appendChild(s);
     }
     const row = el('div', 'lg-row');
@@ -550,8 +546,7 @@ document.getElementById('leadNote').innerHTML =
   };
   const itens = [
     {ico:'porta', n:b.visitou, lbl:'Foram ao PG, mas não firmaram', sub:`de ${num(f.foi)} que já foram a um encontro (${pctTxt(b.visitou, f.foi)})`},
-    {ico:'igreja', n:b.sem_resposta_igreja, lbl:'Não responderam ao 1º contato da igreja', sub:`${pctTxt(b.sem_resposta_igreja, D.inscritos)} dos ${num(D.inscritos)} inscritos`},
-    {ico:'fone', n:b.sem_resposta_lider, lbl:'Não responderam ao 2º contato, o do líder', sub:`${pctTxt(b.sem_resposta_lider, D.com_retorno)} das ${num(D.com_retorno)} pessoas já anotadas`},
+    {ico:'fone', n:b.sem_resposta_lider, lbl:'Não responderam ao líder', sub:`${pctTxt(b.sem_resposta_lider, D.com_retorno)} das ${num(D.com_retorno)} pessoas já anotadas`},
     {ico:'mao', n:D.ajuda_pastor, lbl:'Pedidos de ajuda ao pastor', sub:'linhas em que o líder marcou que precisa do pastor'},
   ];
   const box = document.getElementById('kpis');
