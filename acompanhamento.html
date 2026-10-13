@@ -1,0 +1,624 @@
+<title>Acompanhamento dos PGs</title>
+<meta name="description" content="Como estão os inscritos encaminhados aos líderes de Pequenos Grupos da Igreja Batista Morumbi.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#F5F7F4;
+    --paper-raised:#FFFFFF;
+    --ink:#16211D;
+    --ink-soft:#4B5B54;
+    --line:#DBE3DD;
+    --line-strong:#C2CEC6;
+    --teal-deep:#1B5B54;
+    --teal-mid:#4C8078;
+    --teal-tint:#E4EDE9;
+    --gold:#B87E22;
+    --gold-tint:#F3E4C8;
+    --shadow: 0 1px 2px rgba(22,33,29,.06), 0 8px 24px -12px rgba(22,33,29,.18);
+
+    /* paleta de dados validada (dataviz skill) — vivida de propósito */
+    --chart-1:#2a78d6; /* azul      */
+    --chart-2:#eb6834; /* laranja   */
+    --chart-3:#1baf7a; /* verde-água*/
+    --chart-4:#eda100; /* âmbar     */
+    --chart-5:#e87ba4; /* magenta   */
+    --chart-6:#008300; /* verde     */
+    --chart-7:#4a3aa7; /* violeta   */
+    --chart-8:#e34948; /* vermelho  */
+    --chart-9:#0f7c8c;  /* petróleo  — setembro */
+    --chart-10:#a8541f; /* terracota — outubro  */
+    --chart-11:#5d6f1f; /* oliva     — novembro */
+    --chart-12:#7a2f5e; /* vinho     — dezembro */
+    --chart-grey:#898781; /* categoria residual / "sem informação" */
+    --age-1:#86b6ef; --age-2:#5598e7; --age-3:#2a78d6; --age-4:#1c5cab; --age-5:#0d366b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1613;
+      --paper-raised:#152520;
+      --ink:#EAF1EC;
+      --ink-soft:#9FB3AA;
+      --line:#22322C;
+      --line-strong:#324941;
+      --teal-deep:#57B0A2;
+      --teal-mid:#7FA79F;
+      --teal-tint:#16302B;
+      --gold:#E4A94F;
+      --gold-tint:#2E2313;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+      --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+      --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+      --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+      --chart-grey:#898781;
+      --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1613;
+    --paper-raised:#152520;
+    --ink:#EAF1EC;
+    --ink-soft:#9FB3AA;
+    --line:#22322C;
+    --line-strong:#324941;
+    --teal-deep:#57B0A2;
+    --teal-mid:#7FA79F;
+    --teal-tint:#16302B;
+    --gold:#E4A94F;
+    --gold-tint:#2E2313;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+    --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+    --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+    --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+    --chart-grey:#898781;
+    --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:40px 24px 64px;}
+
+  h1,h2,.num{font-family:'Fraunces', ui-serif, Georgia, serif; text-wrap:balance;}
+
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--teal-deep);
+  }
+
+  /* ===== masthead ===== */
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    padding-bottom:22px; border-bottom:1px solid var(--line-strong);
+    flex-wrap:wrap;
+  }
+  .masthead h1{font-size:34px; font-weight:560; margin:6px 0 8px; color:var(--ink);}
+  .masthead p{margin:0; color:var(--ink-soft); font-size:14.5px; max-width:52ch;}
+  .refresh-badge{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; color:var(--ink-soft); text-align:right;
+    white-space:nowrap;
+  }
+  .refresh-dot{width:7px; height:7px; border-radius:50%; background:var(--teal-deep); flex:none;}
+  .refresh-badge strong{color:var(--ink); font-weight:600;}
+
+  /* ===== funil ===== */
+  .funil{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; margin:28px 0 10px; box-shadow:var(--shadow);
+  }
+  .funil .tile{background:var(--paper-raised); padding:20px 18px; position:relative;}
+  .funil .tile .num{font-size:32px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .funil .tile .lbl{margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .funil .tile.accent .num{color:var(--teal-deep);}
+  .funil .tile.warn .num{color:var(--gold);}
+  .funil-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 36px;}
+  .funil-note b{color:var(--ink); font-weight:600;}
+
+  /* ===== section headers ===== */
+  section{margin-top:44px;}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px;}
+  .sec-head h2{font-size:20px; font-weight:520; margin:0;}
+  .sec-head .sec-sub{font-size:12.5px; color:var(--ink-soft);}
+
+  /* ===== trend chart card ===== */
+  .card{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .trend-legend{display:flex; gap:18px; font-size:12px; color:var(--ink-soft); margin-top:14px; flex-wrap:wrap;}
+  .trend-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+  #trendSvg{width:100%; height:auto; display:block; overflow:visible;}
+  #trendSvg text{font-family:'Work Sans', sans-serif; fill:var(--ink-soft);}
+
+  /* ===== grid of bar-list cards ===== */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:680px){ .grid2{grid-template-columns:1fr;} }
+
+  .barlist{display:flex; flex-direction:column; gap:10px;}
+  .barrow{display:grid; grid-template-columns:1fr auto; column-gap:10px; align-items:center;}
+  .barrow .label{font-size:13px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .barrow .value{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink); text-align:right; min-width:2.4ch;}
+  .track{grid-column:1/-1; height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .track .fill{height:100%; border-radius:4px;}
+
+  /* ===== perfil por mes ===== */
+  .month-row{display:grid; grid-template-columns:132px 1fr 88px; align-items:center; gap:12px; margin-bottom:9px;}
+  .month-row .mlabel{font-size:12.5px; color:var(--ink-soft);}
+  .month-row .mlabel .tag{font-size:10.5px; color:var(--gold); font-weight:600;}
+  .stackbar{display:flex; height:16px; border-radius:3px; overflow:hidden; background:var(--line);}
+  .stackbar span{height:100%;}
+  .seg-casal{background:var(--chart-1);}
+  .seg-solteiro{background:var(--chart-2);}
+  .seg-semi{background:var(--chart-grey);}
+  .estimate .seg-casal, .estimate .seg-solteiro, .estimate .seg-semi{opacity:.5;}
+  .month-row .mtotal{font-size:12.5px; text-align:right; color:var(--ink-soft); font-variant-numeric:tabular-nums;}
+  .stack-legend{display:flex; gap:16px; font-size:12px; color:var(--ink-soft); margin:14px 0 4px;}
+  .stack-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+
+  /* ===== chips (perfil rapido) ===== */
+  .chiprow{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:4px;}
+  @media (max-width:680px){ .chiprow{grid-template-columns:repeat(2,1fr);} }
+  .chip{background:var(--teal-tint); border-radius:8px; padding:14px 14px;}
+  .chip .num{font-size:22px; font-weight:520; color:var(--teal-deep); font-variant-numeric:tabular-nums;}
+  .chip .lbl{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
+
+  /* ===== geografia ===== */
+  .geo-row{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--line);}
+  .geo-row:last-child{border-bottom:none;}
+  .geo-row .gname{font-size:13px;}
+  .geo-row .gtrack{height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .geo-row .gtrack .fill{height:100%; background:var(--chart-3); border-radius:4px;}
+  .geo-row .gval{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; min-width:3ch; text-align:right;}
+  .geo-row .gdist{font-size:11.5px; color:var(--ink-soft); min-width:5ch; text-align:right;}
+  .geo-head{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; padding-bottom:8px; border-bottom:1px solid var(--line-strong);}
+  .geo-head .gdist{text-align:right;}
+  .geo-head .gval{text-align:right;}
+
+  footer{
+    margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+</style>
+<style>
+  /* ===== acompanhamento: estilos próprios (o resto vem do painel de inscrições) ===== */
+  :root{
+    --st-1:#d03b3b; --st-2:#ec835a; --st-3:#fab219; --st-4:#0ca30c; /* faixas de status, fixas nos dois temas */
+    --cat-pg:#1baf7a; --cat-visita:#eda100; --cat-conversa:#2a78d6; --cat-semresp:#e34948; --cat-naoagora:#4a3aa7; --cat-aguarda:#c9cec9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cat-pg:#199e70; --cat-visita:#c98500; --cat-conversa:#3987e5; --cat-semresp:#e66767; --cat-naoagora:#9085e9; --cat-aguarda:#3a4842;
+    }
+  }
+  :root[data-theme="dark"]{
+    --cat-pg:#199e70; --cat-visita:#c98500; --cat-conversa:#3987e5; --cat-semresp:#e66767; --cat-naoagora:#9085e9; --cat-aguarda:#3a4842;
+  }
+
+  .lead-note{margin:18px 0 0; padding:12px 16px; border-radius:10px; background:var(--gold-tint); color:var(--ink); font-size:13.5px; line-height:1.5;}
+  .lead-note b{font-weight:600;}
+
+  /* heróis */
+  .heroes{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:28px;}
+  @media (max-width:760px){ .heroes{grid-template-columns:1fr;} }
+  .hero .eyebrow{margin-bottom:10px;}
+  .hero-row{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
+  .hero .big{font-family:'Fraunces', ui-serif, Georgia, serif; font-size:56px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .hero .of{font-size:14px; color:var(--ink-soft);}
+  .hero .of b{color:var(--ink); font-weight:600;}
+  .hero p.expl{font-size:13px; color:var(--ink-soft); margin:12px 0 0; line-height:1.5;}
+
+  .status-chip{display:inline-flex; align-items:center; gap:6px; padding:4px 10px 4px 6px; border-radius:20px; font-size:12px; font-weight:600;
+    color:var(--ink); background:var(--paper); border:1px solid var(--line);}
+  .status-chip i{display:grid; place-items:center; width:18px; height:18px; border-radius:50%; font-style:normal; font-size:11px; font-weight:700; color:#fff;}
+
+  /* régua 0-25-50-75-100 */
+  .scale{position:relative; margin:22px 0 4px;}
+  .scale-bar{display:flex; gap:2px; height:12px;}
+  .scale-bar span{flex:1; opacity:.35;}
+  .scale-bar span:first-child{border-radius:6px 0 0 6px;}
+  .scale-bar span:last-child{border-radius:0 6px 6px 0;}
+  .scale-bar span.on{opacity:1;}
+  .scale-pin{position:absolute; top:-7px; width:4px; height:26px; margin-left:-2px; border-radius:2px; background:var(--ink); box-shadow:0 0 0 2px var(--paper-raised);}
+  .scale-ticks{display:flex; justify-content:space-between; font-size:10.5px; color:var(--ink-soft); margin-top:6px; font-variant-numeric:tabular-nums;}
+  .scale-legend{display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4px; font-size:11px; color:var(--ink-soft); text-align:center;}
+
+  /* barra dos 100% */
+  .stack100{display:flex; gap:2px; height:34px; border-radius:6px; overflow:hidden; margin:6px 0 18px;}
+  .stack100 span{height:100%; min-width:3px; cursor:default;}
+  .legend-table{display:grid; grid-template-columns:1fr 1fr; gap:4px 28px;}
+  @media (max-width:680px){ .legend-table{grid-template-columns:1fr;} }
+  .lg-row{display:grid; grid-template-columns:12px 1fr auto 46px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px;}
+  .lg-row .sw{width:12px; height:12px; border-radius:3px;}
+  .lg-row .n{font-weight:600; font-variant-numeric:tabular-nums; text-align:right;}
+  .lg-row .p{font-size:12px; color:var(--ink-soft); text-align:right; font-variant-numeric:tabular-nums;}
+  .lg-row small{display:block; font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+
+  /* blocos de números (itens 3, 4, 5 e ajuda do pastor) */
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:var(--shadow);}
+  @media (max-width:760px){ .kpis{grid-template-columns:1fr 1fr;} }
+  .kpi{background:var(--paper-raised); padding:18px 18px 16px; display:flex; flex-direction:column;}
+  .kpi .k-ico{width:30px; height:30px; border-radius:8px; display:grid; place-items:center; margin-bottom:12px; background:var(--teal-tint); color:var(--teal-deep);}
+  .kpi .k-ico svg{width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round;}
+  .kpi .num{font-size:34px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .kpi .k-lbl{font-size:13px; font-weight:600; margin-top:8px; line-height:1.35;}
+  .kpi .k-sub{font-size:12px; color:var(--ink-soft); margin-top:auto; padding-top:8px; line-height:1.4;}
+
+  /* funil do líder */
+  .fun-row{margin-bottom:14px;}
+  .fun-row:last-child{margin-bottom:0;}
+  .fun-top{display:flex; justify-content:space-between; gap:10px; font-size:13px; margin-bottom:6px;}
+  .fun-top b{font-weight:600; font-variant-numeric:tabular-nums;}
+  .fun-top span.pct{color:var(--ink-soft); font-size:12px; margin-left:6px; font-weight:500;}
+  .fun-track{height:14px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .fun-track div{height:100%; background:var(--teal-deep); border-radius:0 4px 4px 0;}
+
+  /* espera */
+  .wait-track{height:14px; background:var(--gold-tint); border-radius:4px; overflow:hidden;}
+  .wait-track div{height:100%; background:var(--gold); border-radius:0 4px 4px 0;}
+
+  /* quadro por PG */
+  .pg-filters{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+  .pg-filters button{font:500 12.5px 'Work Sans', sans-serif; color:var(--ink-soft); background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:20px; padding:6px 12px; cursor:pointer;}
+  .pg-filters button[aria-pressed="true"]{background:var(--ink); color:var(--paper-raised); border-color:var(--ink);}
+  .pg-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:12px;}
+  .pg-card{background:var(--paper-raised); border:1px solid var(--line); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow);}
+  .pg-card .pg-name{font-size:13.5px; font-weight:600; line-height:1.3; min-height:2.6em;}
+  .pg-card .pg-meta{display:flex; justify-content:space-between; align-items:center; margin:8px 0 8px; font-size:12px; color:var(--ink-soft);}
+  .pg-card .pg-meta b{color:var(--ink); font-variant-numeric:tabular-nums;}
+  .pg-card .pg-track{height:8px; border-radius:4px; background:var(--line); overflow:hidden;}
+  .pg-card .pg-track div{height:100%; border-radius:0 4px 4px 0;}
+  .pg-card .pg-pct{font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:5px; color:var(--ink);}
+  .pg-card .pg-pct i{width:8px; height:8px; border-radius:50%;}
+
+  @media (max-width:560px){
+    .pg-grid{grid-template-columns:1fr 1fr; gap:8px;}
+    .pg-card{padding:12px;}
+    .pg-card .pg-name{font-size:12.5px;}
+    .pg-card .lg{display:none;}
+  }
+  .defs{margin-top:16px; font-size:12.5px; color:var(--ink-soft); line-height:1.55;}
+  .defs dt{font-weight:600; color:var(--ink); margin-top:8px;}
+  .defs dd{margin:2px 0 0;}
+
+  #tip{position:fixed; z-index:10; pointer-events:none; background:var(--ink); color:var(--paper-raised); font-size:12px; line-height:1.4;
+    padding:7px 10px; border-radius:7px; max-width:260px; opacity:0; transition:opacity .1s;}
+</style>
+
+<div class="wrap">
+
+  <!-- ABAS:INICIO (gerado por inserir_abas.py; mesmo bloco em todas as páginas do painel) -->
+<style>
+  .abas{display:flex; gap:4px; padding:4px; margin:0 0 26px; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
+  .abas::-webkit-scrollbar{display:none;}
+  .abas .aba{display:flex; align-items:center; gap:8px; flex:1 0 auto; justify-content:center; padding:10px 14px; border-radius:9px;
+    font:500 13.5px/1.2 'Work Sans', ui-sans-serif, system-ui, sans-serif; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+    transition:background .15s, color .15s;}
+  .abas .aba svg{width:17px; height:17px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .abas a.aba:hover{background:var(--teal-tint); color:var(--ink);}
+  .abas a.aba:focus-visible{outline:2px solid var(--teal-deep); outline-offset:1px;}
+  .abas .aba[aria-current="page"]{background:var(--teal-deep); color:var(--paper-raised); font-weight:600;}
+  .abas .aba-breve{cursor:default; opacity:.7;}
+  .abas .aba-breve em{font-style:normal; font-size:10.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold); background:var(--gold-tint); padding:2px 6px; border-radius:20px;}
+  @media (max-width:560px){
+    .abas{gap:2px;}
+    .abas .aba{flex:1 0 auto; padding:9px 8px; font-size:12.5px; gap:5px;}
+    .abas .aba svg, .abas .aba .lg{display:none;}
+    .abas .aba-breve em{font-size:9.5px; padding:2px 5px;}
+  }
+</style>
+<nav class="abas" aria-label="Páginas do painel">
+  <a class="aba" data-aba="inscricoes" href="./">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Inscrições
+  </a>
+  <a class="aba" data-aba="acompanhamento" aria-current="page" href="acompanhamento.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 11.5l2 2 4-4.5"/></svg>Acompanhamento<span class="lg"> dos PGs</span>
+  </a>
+  <span class="aba aba-breve" aria-disabled="true" title="Em preparação">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Mapa<span class="lg"> dos PGs</span> <em><span class="lg">em </span>breve</em>
+  </span>
+</nav>
+<!-- ABAS:FIM -->
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
+      <h1>Acompanhamento dos PGs</h1>
+      <p>Como estão os inscritos que o acolhimento encaminhou aos líderes, a partir das planilhas de acompanhamento que cada PG preenche.</p>
+    </div>
+    <div class="refresh-badge">
+      <span class="refresh-dot"></span>
+      <span>Atualizado em <strong id="snapDate">—</strong><br>Fonte: planilhas dos líderes</span>
+    </div>
+  </div>
+
+  <p class="lead-note" id="leadNote"></p>
+
+  <!-- 1 e 2: os dois números principais -->
+  <div class="heroes">
+    <div class="card hero">
+      <div class="eyebrow">PGs que já responderam a planilha</div>
+      <div class="hero-row">
+        <span class="big" id="hPgPct">—</span>
+        <span class="of" id="hPgOf"></span>
+      </div>
+      <div style="margin-top:12px" id="hPgChip"></div>
+      <div class="scale" id="pgScale">
+        <div class="scale-bar">
+          <span style="background:var(--st-1)"></span><span style="background:var(--st-2)"></span>
+          <span style="background:var(--st-3)"></span><span style="background:var(--st-4)"></span>
+        </div>
+        <div class="scale-pin" id="pgPin"></div>
+        <div class="scale-ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+      </div>
+    </div>
+
+    <div class="card hero">
+      <div class="eyebrow">Inscritos que já estão firmes em um PG</div>
+      <div class="hero-row">
+        <span class="big" id="hInPg">—</span>
+        <span class="of" id="hInPgOf"></span>
+      </div>
+      <p class="expl" id="hInPgExpl"></p>
+    </div>
+  </div>
+
+  <!-- 2: os 100% dos inscritos -->
+  <section>
+    <div class="sec-head">
+      <h2>Onde estão os <span id="totIns">—</span> inscritos</h2>
+      <span class="sec-sub">100% dos inscritos, qualquer que seja o PG</span>
+    </div>
+    <div class="card">
+      <div class="stack100" id="stack100" role="img"></div>
+      <div class="legend-table" id="legend100"></div>
+    </div>
+  </section>
+
+  <!-- 3, 4, 5 e ajuda do pastor -->
+  <section>
+    <div class="sec-head"><h2>Quem precisa de um novo cuidado</h2></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <!-- extras -->
+  <section>
+    <div class="grid2">
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:6px;">Do contato do líder até o PG</div>
+        <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);" id="funSub"></p>
+        <div id="funil"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:6px;">Há quanto tempo esperam uma anotação</div>
+        <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);" id="waitSub"></p>
+        <div id="wait"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 detalhado: cada PG -->
+  <section>
+    <div class="sec-head">
+      <h2>Planilha de cada PG</h2>
+      <span class="sec-sub">quanto da lista o líder já anotou</span>
+    </div>
+    <div class="pg-filters" id="pgFilters" role="group" aria-label="Filtrar PGs"></div>
+    <div class="pg-grid" id="pgGrid"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Como ler esta página</h2></div>
+    <div class="card">
+      <dl class="defs">
+        <dt>Firmes em um PG</dt><dd>O líder marcou “Integrado ao PG” ou que a pessoa está frequentando (sempre ou às vezes). Vale o PG que for, mesmo que não seja o primeiro indicado.</dd>
+        <dt>Foram ao PG, mas não firmaram</dt><dd>Foram pelo menos uma vez e depois pararam de ir.</dd>
+        <dt>Não responderam ao 1º contato da igreja</dt><dd>Inscritos que não responderam ao acolhimento e por isso ainda não foram encaminhados a um líder.</dd>
+        <dt>Não responderam ao 2º contato, o do líder</dt><dd>Depois do acolhimento, o 2º contato é o do líder do PG. O líder marcou “Sem resposta” ou que a pessoa não respondeu ao primeiro contato dele.</dd>
+        <dt>Ainda sem anotação do líder</dt><dd>Encaminhados a um PG cuja linha na planilha ainda está em branco. É a parte que mais muda conforme os líderes preenchem.</dd>
+        <dt>Pessoas, não linhas</dt><dd>Quem foi indicado a dois ou três PGs conta uma vez só; vale a melhor notícia entre as planilhas.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>
+    <span>Números agregados. Nenhum nome ou telefone de inscrito aparece nesta página.</span>
+    <span id="footRefresh"></span>
+  </footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const D = {"hoje_br": "13/10/2026", "pgs": {"total": 28, "responderam": 7}, "por_pg": [{"pg": "PG Cristiformes", "total": 22, "feitas": 22}, {"pg": "PG Mulheres - Alba", "total": 3, "feitas": 3}, {"pg": "PG Adultos - Moema", "total": 2, "feitas": 2}, {"pg": "PG L&M", "total": 2, "feitas": 2}, {"pg": "PG William Siqueira", "total": 2, "feitas": 2}, {"pg": "PG Homens Guerreiros", "total": 1, "feitas": 1}, {"pg": "PG Klebson Pedro", "total": 2, "feitas": 1}, {"pg": "PG Deus Conosco", "total": 36, "feitas": 0}, {"pg": "PG Laudicéia", "total": 26, "feitas": 0}, {"pg": "PG Vitória", "total": 25, "feitas": 0}, {"pg": "PG Mulheres (quinta-feira)", "total": 17, "feitas": 0}, {"pg": "Min. Jovens (triagem e PG Estaiada)", "total": 16, "feitas": 0}, {"pg": "Min. de Casais (triagem)", "total": 15, "feitas": 0}, {"pg": "PG Adultos (Oração)", "total": 14, "feitas": 0}, {"pg": "PG Vitor Ayala", "total": 13, "feitas": 0}, {"pg": "PG Allison e Samara", "total": 9, "feitas": 0}, {"pg": "PG Conexão", "total": 7, "feitas": 0}, {"pg": "PG Maria Cândida", "total": 7, "feitas": 0}, {"pg": "PG Efatá", "total": 6, "feitas": 0}, {"pg": "PG Noivos e Recém-Casados", "total": 4, "feitas": 0}, {"pg": "PG Jovens (25 a 30 anos)", "total": 3, "feitas": 0}, {"pg": "PG Clauber e Tuca", "total": 2, "feitas": 0}, {"pg": "PG Homens (Amós)", "total": 2, "feitas": 0}, {"pg": "PG Homens - Humberto Aiello", "total": 2, "feitas": 0}, {"pg": "PG Homens - Quarta-feira", "total": 2, "feitas": 0}, {"pg": "EPA (pré-adolescentes)", "total": 1, "feitas": 0}, {"pg": "PG Homens (quintas)", "total": 1, "feitas": 0}, {"pg": "PG Sorania", "total": 1, "feitas": 0}], "encaminhamentos": {"total": 243, "feitas": 33}, "pessoas_nas_planilhas": 200, "com_retorno": 31, "inscritos": 222, "blocos": {"em_pg": 8, "visitou": 3, "acompanhamento": 6, "outro_pg": 3, "sem_resposta_lider": 11, "nao_agora": 3, "sem_resposta_igreja": 11, "aguardando": 177}, "funil_lider": {"com_retorno": 31, "respondeu": 28, "foi": 11, "em_pg": 8}, "espera": {"ate30": 35, "30a90": 36, "mais90": 125, "sem_data": 14}, "ajuda_pastor": 5};
+
+const fmtPct = (n, d) => d ? Math.round(100 * n / d) : 0;
+const pctTxt = (n, d) => fmtPct(n, d).toLocaleString('pt-BR') + '%';
+const num = n => n.toLocaleString('pt-BR');
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+
+// faixas de 25 em 25 (pedido do Pr. Gustavo): cor + ícone + rótulo, nunca só a cor
+const FAIXAS = [
+  {max:25,  cor:'var(--st-1)', ico:'!', rot:'Até 25%'},
+  {max:50,  cor:'var(--st-2)', ico:'↗', rot:'26 a 50%'},
+  {max:75,  cor:'var(--st-3)', ico:'↗', rot:'51 a 75%'},
+  {max:100, cor:'var(--st-4)', ico:'✓', rot:'76 a 100%'},
+];
+const faixa = p => FAIXAS.find(f => p <= f.max) || FAIXAS[3];
+function chip(p, txt){
+  const f = faixa(p);
+  return `<span class="status-chip"><i style="background:${f.cor}">${f.ico}</i>${txt || f.rot}</span>`;
+}
+
+// tooltip simples
+const tip = document.getElementById('tip');
+function bindTip(node, html){
+  node.addEventListener('pointermove', e => {
+    tip.innerHTML = html; tip.style.opacity = 1;
+    const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+    tip.style.left = x + 'px'; tip.style.top = (e.clientY + 16) + 'px';
+  });
+  node.addEventListener('pointerleave', () => tip.style.opacity = 0);
+}
+
+document.getElementById('snapDate').textContent = D.hoje_br;
+document.getElementById('footRefresh').textContent = 'Atualizado em ' + D.hoje_br;
+
+// ---- nota para os líderes
+document.getElementById('leadNote').innerHTML =
+  `<b>Líder, esta página nasce da sua planilha.</b> Até agora ${num(D.encaminhamentos.feitas)} das ${num(D.encaminhamentos.total)} linhas foram anotadas. ` +
+  `Cada linha preenchida deixa o retrato mais fiel e ajuda o pastor a cuidar de quem ainda não chegou a um PG.`;
+
+// ---- 1. PGs que responderam
+(function(){
+  const t = D.pgs.total, r = D.pgs.responderam, p = fmtPct(r, t);
+  document.getElementById('hPgPct').textContent = p + '%';
+  document.getElementById('hPgOf').innerHTML = `<b>${r}</b> de ${t} PGs`;
+  document.getElementById('hPgChip').innerHTML = chip(p);
+  const pin = document.getElementById('pgPin');
+  pin.style.left = Math.max(0.5, Math.min(99.5, p)) + '%';
+  const segs = document.querySelectorAll('#pgScale .scale-bar span');
+  segs[FAIXAS.indexOf(faixa(p))].classList.add('on');
+  document.getElementById('pgScale').setAttribute('aria-label', `${p}% dos PGs responderam`);
+})();
+
+// ---- 2. firmes em um PG
+(function(){
+  const b = D.blocos, ins = D.inscritos;
+  document.getElementById('hInPg').textContent = pctTxt(b.em_pg, ins);
+  document.getElementById('hInPgOf').innerHTML = `<b>${num(b.em_pg)}</b> de ${num(ins)} inscritos`;
+  document.getElementById('hInPgExpl').innerHTML =
+    `Entre as ${num(D.com_retorno)} pessoas que os líderes já anotaram, <b style="color:var(--ink)">${pctTxt(b.em_pg, D.com_retorno)}</b> estão firmes em um PG. ` +
+    `O número total vai subir conforme as outras planilhas forem preenchidas.`;
+})();
+
+// ---- 2. barra dos 100%
+(function(){
+  const b = D.blocos, tot = D.inscritos;
+  document.getElementById('totIns').textContent = num(tot);
+  const GRUPOS = [
+    {k:'em_pg',     cor:'var(--cat-pg)',       rot:'Firmes em um PG', v:b.em_pg},
+    {k:'visitou',   cor:'var(--cat-visita)',   rot:'Foram ao PG, mas não firmaram', v:b.visitou},
+    {k:'conversa',  cor:'var(--cat-conversa)', rot:'Em conversa com o líder ou mudando de PG', v:b.acompanhamento + b.outro_pg,
+       sub:`${num(b.acompanhamento)} em acompanhamento · ${num(b.outro_pg)} escolheram outro PG ou horário`},
+    {k:'semresp',   cor:'var(--cat-semresp)',  rot:'Não responderam', v:b.sem_resposta_igreja + b.sem_resposta_lider,
+       sub:`${num(b.sem_resposta_igreja)} à igreja · ${num(b.sem_resposta_lider)} ao líder`},
+    {k:'naoagora',  cor:'var(--cat-naoagora)', rot:'Disseram que não querem PG agora', v:b.nao_agora},
+    {k:'aguarda',   cor:'var(--cat-aguarda)',  rot:'Ainda sem anotação do líder', v:b.aguardando},
+  ];
+  const bar = document.getElementById('stack100'), leg = document.getElementById('legend100');
+  bar.setAttribute('aria-label', GRUPOS.map(g => `${g.rot}: ${g.v}`).join('; '));
+  GRUPOS.forEach(g => {
+    if (g.v > 0){
+      const s = el('span'); s.style.flex = g.v; s.style.background = g.cor;
+      bindTip(s, `<b>${g.rot}</b><br>${num(g.v)} inscritos · ${pctTxt(g.v, tot)}`);
+      bar.appendChild(s);
+    }
+    const row = el('div', 'lg-row');
+    row.innerHTML = `<span class="sw" style="background:${g.cor}"></span>` +
+      `<span>${g.rot}${g.sub ? `<small>${g.sub}</small>` : ''}</span>` +
+      `<span class="n">${num(g.v)}</span><span class="p">${pctTxt(g.v, tot)}</span>`;
+    leg.appendChild(row);
+  });
+})();
+
+// ---- 3, 4, 5 e ajuda do pastor
+(function(){
+  const b = D.blocos, f = D.funil_lider;
+  const ICO = {
+    porta:'<path d="M4 21h16M6 21V4h9v17"/><path d="M15 4l4 2v15"/><circle cx="12" cy="13" r=".8"/>',
+    igreja:'<path d="M12 2v5M9.5 4.5h5"/><path d="M5 21V11l7-4 7 4v10z"/><path d="M10 21v-4h4v4"/>',
+    fone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/><path d="M15 3l6 6M21 3l-6 6"/>',
+    mao:'<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>',
+  };
+  const itens = [
+    {ico:'porta', n:b.visitou, lbl:'Foram ao PG, mas não firmaram', sub:`de ${num(f.foi)} que já foram a um encontro (${pctTxt(b.visitou, f.foi)})`},
+    {ico:'igreja', n:b.sem_resposta_igreja, lbl:'Não responderam ao 1º contato da igreja', sub:`${pctTxt(b.sem_resposta_igreja, D.inscritos)} dos ${num(D.inscritos)} inscritos`},
+    {ico:'fone', n:b.sem_resposta_lider, lbl:'Não responderam ao 2º contato, o do líder', sub:`${pctTxt(b.sem_resposta_lider, D.com_retorno)} das ${num(D.com_retorno)} pessoas já anotadas`},
+    {ico:'mao', n:D.ajuda_pastor, lbl:'Pedidos de ajuda ao pastor', sub:'linhas em que o líder marcou que precisa do pastor'},
+  ];
+  const box = document.getElementById('kpis');
+  itens.forEach(it => {
+    const k = el('div', 'kpi');
+    k.innerHTML = `<span class="k-ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICO[it.ico]}</svg></span>` +
+      `<span class="num">${num(it.n)}</span><span class="k-lbl">${it.lbl}</span><span class="k-sub">${it.sub}</span>`;
+    box.appendChild(k);
+  });
+})();
+
+// ---- extra: funil do líder
+(function(){
+  const f = D.funil_lider, base = f.com_retorno;
+  document.getElementById('funSub').textContent = `Só as ${num(base)} pessoas que os líderes já anotaram.`;
+  const etapas = [
+    ['Anotadas pelo líder', f.com_retorno],
+    ['Responderam ao 1º contato do líder', f.respondeu],
+    ['Foram ao PG pelo menos uma vez', f.foi],
+    ['Estão firmes em um PG', f.em_pg],
+  ];
+  const box = document.getElementById('funil');
+  etapas.forEach(([lbl, v], i) => {
+    const r = el('div', 'fun-row');
+    r.innerHTML = `<div class="fun-top"><span>${lbl}</span><span><b>${num(v)}</b>${i ? `<span class="pct">${pctTxt(v, base)}</span>` : ''}</span></div>` +
+      `<div class="fun-track"><div style="width:${base ? 100 * v / base : 0}%"></div></div>`;
+    box.appendChild(r);
+  });
+})();
+
+// ---- extra: espera
+(function(){
+  const w = D.espera, tot = w.ate30 + w['30a90'] + w.mais90 + w.sem_data;
+  document.getElementById('waitSub').textContent = `${num(tot)} encaminhamentos ainda em branco, pela data em que foram enviados ao líder.`;
+  const faixas = [['Até 30 dias', w.ate30], ['De 31 a 90 dias', w['30a90']], ['Mais de 90 dias', w.mais90], ['Sem data na planilha', w.sem_data]];
+  const mx = Math.max(...faixas.map(f => f[1]), 1);
+  const box = document.getElementById('wait');
+  faixas.forEach(([lbl, v]) => {
+    const r = el('div', 'fun-row');
+    r.innerHTML = `<div class="fun-top"><span>${lbl}</span><span><b>${num(v)}</b><span class="pct">${pctTxt(v, tot)}</span></span></div>` +
+      `<div class="wait-track"><div style="width:${100 * v / mx}%"></div></div>`;
+    box.appendChild(r);
+  });
+})();
+
+// ---- 1 detalhado: cada PG
+(function(){
+  const grid = document.getElementById('pgGrid'), filtros = document.getElementById('pgFilters');
+  const lista = D.por_pg.map(x => ({...x, p: fmtPct(x.feitas, x.total)}));
+  const OPC = [['todos', 'Todos'], ['feitos', 'Já começaram'], ['branco', 'Ainda em branco']];
+  let atual = 'todos';
+  function desenhar(){
+    grid.innerHTML = '';
+    lista.filter(x => atual === 'todos' || (atual === 'feitos' ? x.feitas > 0 : x.feitas === 0)).forEach(x => {
+      const f = faixa(x.p);
+      const c = el('div', 'pg-card');
+      c.innerHTML = `<div class="pg-name">${x.pg}</div>` +
+        `<div class="pg-meta"><span><b>${x.feitas}</b> de ${x.total}<span class="lg"> ${x.total === 1 ? 'anotada' : 'anotadas'}</span></span>` +
+        `<span class="pg-pct"><i style="background:${f.cor}"></i>${x.p}%</span></div>` +
+        `<div class="pg-track"><div style="width:${x.p}%; background:${f.cor}"></div></div>`;
+      bindTip(c, `<b>${x.pg}</b><br>${x.feitas} de ${x.total} linhas anotadas · faixa ${f.rot.toLowerCase()}`);
+      grid.appendChild(c);
+    });
+  }
+  OPC.forEach(([k, rot]) => {
+    const n = k === 'todos' ? lista.length : lista.filter(x => k === 'feitos' ? x.feitas > 0 : x.feitas === 0).length;
+    const b = el('button', '', `${rot} · ${n}`);
+    b.type = 'button'; b.setAttribute('aria-pressed', k === atual);
+    b.onclick = () => { atual = k; filtros.querySelectorAll('button').forEach(o => o.setAttribute('aria-pressed', o === b)); desenhar(); };
+    filtros.appendChild(b);
+  });
+  // legenda das faixas
+  const lg = el('div', '', FAIXAS.map(f => chip(f.max, f.rot)).join(' '));
+  lg.style.cssText = 'margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;';
+  filtros.appendChild(lg);
+  desenhar();
+})();
+</script>

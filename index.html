@@ -189,6 +189,48 @@
 
 <div class="wrap">
 
+<!-- ABAS:INICIO (gerado por inserir_abas.py; mesmo bloco em todas as páginas do painel) -->
+<style>
+  .abas{display:flex; gap:4px; padding:4px; margin:0 0 26px; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
+  .abas::-webkit-scrollbar{display:none;}
+  .abas .aba{display:flex; align-items:center; gap:8px; flex:1 0 auto; justify-content:center; padding:10px 14px; border-radius:9px;
+    font:500 13.5px/1.2 'Work Sans', ui-sans-serif, system-ui, sans-serif; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+    transition:background .15s, color .15s;}
+  .abas .aba svg{width:17px; height:17px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .abas a.aba:hover{background:var(--teal-tint); color:var(--ink);}
+  .abas a.aba:focus-visible{outline:2px solid var(--teal-deep); outline-offset:1px;}
+  .abas .aba[aria-current="page"]{background:var(--teal-deep); color:var(--paper-raised); font-weight:600;}
+  .abas .aba-breve{cursor:default; opacity:.7;}
+  .abas .aba-breve em{font-style:normal; font-size:10.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold); background:var(--gold-tint); padding:2px 6px; border-radius:20px;}
+  @media (max-width:560px){
+    .abas{gap:2px;}
+    .abas .aba{flex:1 0 auto; padding:9px 8px; font-size:12.5px; gap:5px;}
+    .abas .aba svg, .abas .aba .lg{display:none;}
+    .abas .aba-breve em{font-size:9.5px; padding:2px 5px;}
+  }
+</style>
+<nav class="abas" aria-label="Páginas do painel">
+  <a class="aba" data-aba="inscricoes" aria-current="page" href="./">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Inscrições
+  </a>
+  <a class="aba" data-aba="acompanhamento" href="acompanhamento.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 11.5l2 2 4-4.5"/></svg>Acompanhamento<span class="lg"> dos PGs</span>
+  </a>
+  <span class="aba aba-breve" aria-disabled="true" title="Em preparação">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Mapa<span class="lg"> dos PGs</span> <em><span class="lg">em </span>breve</em>
+  </span>
+</nav>
+<!-- ABAS:FIM -->
+
+
+
+
+
+
+
+
   <div class="masthead">
     <div>
       <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
@@ -203,6 +245,40 @@
 
   <div class="funil" id="funilTiles"></div>
   <p class="funil-note" id="funilNote"></p>
+
+<!-- CHAMADA:INICIO (link para a aba Acompanhamento; gerado por inserir_abas.py) -->
+<style>
+  .chamada{display:flex; align-items:center; gap:16px; margin:-14px 0 8px; padding:18px 20px; border-radius:12px; text-decoration:none;
+    color:var(--ink); background:var(--paper-raised); border:1px solid var(--line); border-left:4px solid var(--teal-deep);
+    box-shadow:var(--shadow); transition:transform .15s, border-color .15s;}
+  .chamada:hover{transform:translateY(-1px); border-color:var(--teal-mid);}
+  .chamada:focus-visible{outline:2px solid var(--teal-deep); outline-offset:2px;}
+  .chamada .ch-ico{flex:none; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:var(--teal-tint); color:var(--teal-deep);}
+  .chamada .ch-ico svg{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .chamada .ch-txt{flex:1; min-width:0;}
+  .chamada .ch-tit{font-family:'Fraunces', ui-serif, Georgia, serif; font-size:18px; font-weight:540;}
+  .chamada .ch-sub{font-size:13px; color:var(--ink-soft); margin-top:3px;}
+  .chamada .ch-seta{flex:none; font-size:13px; font-weight:600; color:var(--teal-deep); white-space:nowrap;}
+  @media (max-width:560px){ .chamada{padding:16px;} .chamada .ch-ico{display:none;} .chamada .ch-seta span{display:none;} }
+  /* aproveita o bloco (só existe no painel de inscrições) para os 4 números do funil não cortarem no celular */
+  @media (max-width:680px){ .funil{grid-template-columns:repeat(2,1fr);} }
+</style>
+<a class="chamada" href="acompanhamento.html">
+  <span class="ch-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 11.5l2 2 4-4.5"/></svg></span>
+  <span class="ch-txt">
+    <span class="ch-tit">Acompanhamento dos PGs</span>
+    <span class="ch-sub" style="display:block">Como estão os inscritos que já foram encaminhados aos líderes: quem chegou ao PG, quem ainda não respondeu e quais PGs já preencheram a planilha.</span>
+  </span>
+  <span class="ch-seta"><span>Ver página </span>&rarr;</span>
+</a>
+<!-- CHAMADA:FIM -->
+
+
+
+
+
+
+
 
   <section>
     <div class="sec-head">
