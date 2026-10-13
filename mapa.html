@@ -1,0 +1,543 @@
+<title>Mapa dos PGs</title>
+<meta name="description" content="Onde e quando os Pequenos Grupos da Igreja Batista Morumbi se reúnem.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper:#F5F7F4;
+    --paper-raised:#FFFFFF;
+    --ink:#16211D;
+    --ink-soft:#4B5B54;
+    --line:#DBE3DD;
+    --line-strong:#C2CEC6;
+    --teal-deep:#1B5B54;
+    --teal-mid:#4C8078;
+    --teal-tint:#E4EDE9;
+    --gold:#B87E22;
+    --gold-tint:#F3E4C8;
+    --shadow: 0 1px 2px rgba(22,33,29,.06), 0 8px 24px -12px rgba(22,33,29,.18);
+
+    /* paleta de dados validada (dataviz skill) — vivida de propósito */
+    --chart-1:#2a78d6; /* azul      */
+    --chart-2:#eb6834; /* laranja   */
+    --chart-3:#1baf7a; /* verde-água*/
+    --chart-4:#eda100; /* âmbar     */
+    --chart-5:#e87ba4; /* magenta   */
+    --chart-6:#008300; /* verde     */
+    --chart-7:#4a3aa7; /* violeta   */
+    --chart-8:#e34948; /* vermelho  */
+    --chart-9:#0f7c8c;  /* petróleo  — setembro */
+    --chart-10:#a8541f; /* terracota — outubro  */
+    --chart-11:#5d6f1f; /* oliva     — novembro */
+    --chart-12:#7a2f5e; /* vinho     — dezembro */
+    --chart-grey:#898781; /* categoria residual / "sem informação" */
+    --age-1:#86b6ef; --age-2:#5598e7; --age-3:#2a78d6; --age-4:#1c5cab; --age-5:#0d366b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1613;
+      --paper-raised:#152520;
+      --ink:#EAF1EC;
+      --ink-soft:#9FB3AA;
+      --line:#22322C;
+      --line-strong:#324941;
+      --teal-deep:#57B0A2;
+      --teal-mid:#7FA79F;
+      --teal-tint:#16302B;
+      --gold:#E4A94F;
+      --gold-tint:#2E2313;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+      --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+      --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+      --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+      --chart-grey:#898781;
+      --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1613;
+    --paper-raised:#152520;
+    --ink:#EAF1EC;
+    --ink-soft:#9FB3AA;
+    --line:#22322C;
+    --line-strong:#324941;
+    --teal-deep:#57B0A2;
+    --teal-mid:#7FA79F;
+    --teal-tint:#16302B;
+    --gold:#E4A94F;
+    --gold-tint:#2E2313;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+    --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
+    --chart-5:#d55181; --chart-6:#008300; --chart-7:#9085e9; --chart-8:#e66767;
+    --chart-9:#34a8bc; --chart-10:#d6813f; --chart-11:#9cb43c; --chart-12:#c06699;
+    --chart-grey:#898781;
+    --age-1:#cde2fb; --age-2:#9ec5f4; --age-3:#6da7ec; --age-4:#3987e5; --age-5:#184f95;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:40px 24px 64px;}
+
+  h1,h2,.num{font-family:'Fraunces', ui-serif, Georgia, serif; text-wrap:balance;}
+
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--teal-deep);
+  }
+
+  /* ===== masthead ===== */
+  .masthead{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    padding-bottom:22px; border-bottom:1px solid var(--line-strong);
+    flex-wrap:wrap;
+  }
+  .masthead h1{font-size:34px; font-weight:560; margin:6px 0 8px; color:var(--ink);}
+  .masthead p{margin:0; color:var(--ink-soft); font-size:14.5px; max-width:52ch;}
+  .refresh-badge{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; color:var(--ink-soft); text-align:right;
+    white-space:nowrap;
+  }
+  .refresh-dot{width:7px; height:7px; border-radius:50%; background:var(--teal-deep); flex:none;}
+  .refresh-badge strong{color:var(--ink); font-weight:600;}
+
+  /* ===== funil ===== */
+  .funil{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; margin:28px 0 10px; box-shadow:var(--shadow);
+  }
+  .funil .tile{background:var(--paper-raised); padding:20px 18px; position:relative;}
+  .funil .tile .num{font-size:32px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .funil .tile .lbl{margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .funil .tile.accent .num{color:var(--teal-deep);}
+  .funil .tile.warn .num{color:var(--gold);}
+  .funil-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 36px;}
+  .funil-note b{color:var(--ink); font-weight:600;}
+
+  /* ===== section headers ===== */
+  section{margin-top:44px;}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px;}
+  .sec-head h2{font-size:20px; font-weight:520; margin:0;}
+  .sec-head .sec-sub{font-size:12.5px; color:var(--ink-soft);}
+
+  /* ===== trend chart card ===== */
+  .card{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .trend-legend{display:flex; gap:18px; font-size:12px; color:var(--ink-soft); margin-top:14px; flex-wrap:wrap;}
+  .trend-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+  #trendSvg{width:100%; height:auto; display:block; overflow:visible;}
+  #trendSvg text{font-family:'Work Sans', sans-serif; fill:var(--ink-soft);}
+
+  /* ===== grid of bar-list cards ===== */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:680px){ .grid2{grid-template-columns:1fr;} }
+
+  .barlist{display:flex; flex-direction:column; gap:10px;}
+  .barrow{display:grid; grid-template-columns:1fr auto; column-gap:10px; align-items:center;}
+  .barrow .label{font-size:13px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .barrow .value{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink); text-align:right; min-width:2.4ch;}
+  .track{grid-column:1/-1; height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .track .fill{height:100%; border-radius:4px;}
+
+  /* ===== perfil por mes ===== */
+  .month-row{display:grid; grid-template-columns:132px 1fr 88px; align-items:center; gap:12px; margin-bottom:9px;}
+  .month-row .mlabel{font-size:12.5px; color:var(--ink-soft);}
+  .month-row .mlabel .tag{font-size:10.5px; color:var(--gold); font-weight:600;}
+  .stackbar{display:flex; height:16px; border-radius:3px; overflow:hidden; background:var(--line);}
+  .stackbar span{height:100%;}
+  .seg-casal{background:var(--chart-1);}
+  .seg-solteiro{background:var(--chart-2);}
+  .seg-semi{background:var(--chart-grey);}
+  .estimate .seg-casal, .estimate .seg-solteiro, .estimate .seg-semi{opacity:.5;}
+  .month-row .mtotal{font-size:12.5px; text-align:right; color:var(--ink-soft); font-variant-numeric:tabular-nums;}
+  .stack-legend{display:flex; gap:16px; font-size:12px; color:var(--ink-soft); margin:14px 0 4px;}
+  .stack-legend .sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+
+  /* ===== chips (perfil rapido) ===== */
+  .chiprow{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:4px;}
+  @media (max-width:680px){ .chiprow{grid-template-columns:repeat(2,1fr);} }
+  .chip{background:var(--teal-tint); border-radius:8px; padding:14px 14px;}
+  .chip .num{font-size:22px; font-weight:520; color:var(--teal-deep); font-variant-numeric:tabular-nums;}
+  .chip .lbl{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
+
+  /* ===== geografia ===== */
+  .geo-row{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--line);}
+  .geo-row:last-child{border-bottom:none;}
+  .geo-row .gname{font-size:13px;}
+  .geo-row .gtrack{height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden;}
+  .geo-row .gtrack .fill{height:100%; background:var(--chart-3); border-radius:4px;}
+  .geo-row .gval{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; min-width:3ch; text-align:right;}
+  .geo-row .gdist{font-size:11.5px; color:var(--ink-soft); min-width:5ch; text-align:right;}
+  .geo-head{display:grid; grid-template-columns:1fr 3fr auto auto; gap:10px; font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; padding-bottom:8px; border-bottom:1px solid var(--line-strong);}
+  .geo-head .gdist{text-align:right;}
+  .geo-head .gval{text-align:right;}
+
+  footer{
+    margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+</style>
+<link rel="stylesheet" href="assets/leaflet/leaflet.css">
+<style>
+  /* ===== mapa: estilos próprios (o resto vem do painel de inscrições) ===== */
+  .kpi4{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; margin:28px 0 0; box-shadow:var(--shadow);}
+  @media (max-width:680px){ .kpi4{grid-template-columns:1fr 1fr;} }
+  .kpi4 .tile{background:var(--paper-raised); padding:18px;}
+  .kpi4 .num{font-size:32px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
+  .kpi4 .lbl{margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .kpi4 .tile.accent .num{color:var(--teal-deep);}
+
+  .map-card{padding:0; overflow:hidden;}
+  .map-tools{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid var(--line);}
+  .toggles{display:flex; gap:6px; flex-wrap:wrap;}
+  .toggles button{display:inline-flex; align-items:center; gap:8px; font:500 12.5px 'Work Sans', sans-serif; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:6px 12px; cursor:pointer;}
+  .toggles button i{width:12px; height:12px; border-radius:50%; flex:none;}
+  .toggles button[aria-pressed="true"]{color:var(--ink); border-color:var(--line-strong); background:var(--paper-raised); font-weight:600;}
+  .toggles button[aria-pressed="false"] i{opacity:.3;}
+  .map-note{font-size:12px; color:var(--ink-soft);}
+  #mapa{height:540px; background:var(--teal-tint);}
+  @media (max-width:680px){ #mapa{height:440px;} }
+  .map-foot{padding:12px 16px; font-size:12.5px; color:var(--ink-soft); border-top:1px solid var(--line); line-height:1.5;}
+
+  /* marcadores */
+  .pin{display:grid; place-items:center; border-radius:50%; background:var(--teal-deep); color:#fff; font:700 12px 'Work Sans', sans-serif;
+    border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.35);}
+  .pin.sede{border-radius:12px; background:var(--gold); font-size:13px; gap:0; line-height:1;}
+  .pin.sede svg{width:16px; height:16px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip{background:var(--paper-raised); color:var(--ink); box-shadow:var(--shadow);}
+  .leaflet-popup-content{margin:12px 14px; font:13px/1.45 'Work Sans', sans-serif; max-height:260px; overflow:auto;}
+  .leaflet-popup-content h4{margin:0 0 6px; font:600 14px 'Fraunces', serif;}
+  .leaflet-popup-content ul{margin:0; padding:0; list-style:none;}
+  .leaflet-popup-content li{padding:5px 0; border-top:1px solid var(--line);}
+  .leaflet-popup-content li small{display:block; color:var(--ink-soft); font-size:11.5px;}
+  .leaflet-container{font-family:'Work Sans', sans-serif;}
+  .leaflet-container a.leaflet-popup-close-button{color:var(--ink-soft);}
+  .leaflet-tooltip{background:var(--ink); color:var(--paper-raised); border:none; font:12px 'Work Sans', sans-serif; box-shadow:none;}
+  .leaflet-tooltip-top:before{border-top-color:var(--ink);}
+
+  /* listas */
+  .barlist2{display:flex; flex-direction:column; gap:10px;}
+  .br{display:grid; grid-template-columns:1fr auto; column-gap:10px; align-items:center;}
+  .br .l{font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .br .v{font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; text-align:right;}
+  .br .t{grid-column:1/-1; height:7px; background:var(--teal-tint); border-radius:4px; overflow:hidden; margin-top:4px;}
+  .br .t div{height:100%; border-radius:0 4px 4px 0;}
+
+  /* todos os PGs */
+  .pg-tools{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .chips button{font:500 12.5px 'Work Sans', sans-serif; color:var(--ink-soft); background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:20px; padding:6px 12px; cursor:pointer;}
+  .chips button[aria-pressed="true"]{background:var(--ink); color:var(--paper-raised); border-color:var(--ink);}
+  .busca{flex:1 1 200px; min-width:0; font:14px 'Work Sans', sans-serif; padding:8px 12px; border-radius:20px; border:1px solid var(--line);
+    background:var(--paper-raised); color:var(--ink);}
+  .busca:focus{outline:2px solid var(--teal-deep); outline-offset:1px;}
+  .grp{background:var(--paper-raised); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); margin-bottom:10px; overflow:hidden;}
+  .grp summary{display:flex; align-items:center; gap:10px; padding:14px 16px; cursor:pointer; list-style:none; font-weight:600; font-size:14.5px;}
+  .grp summary::-webkit-details-marker{display:none;}
+  .grp summary .cnt{font-weight:500; font-size:12.5px; color:var(--ink-soft);}
+  .grp summary .chev{margin-left:auto; width:18px; height:18px; stroke:var(--ink-soft); fill:none; stroke-width:2; transition:transform .15s;}
+  .grp[open] summary .chev{transform:rotate(180deg);}
+  .grp summary:focus-visible{outline:2px solid var(--teal-deep); outline-offset:-2px;}
+  .pgr{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.9fr) 300px; gap:4px 16px; align-items:center;
+    padding:11px 16px; border-top:1px solid var(--line); font-size:13px;}
+  .pgr .nm{font-weight:600; line-height:1.3;}
+  .pgr .nm small{display:block; font-weight:400; font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .pgr .q b{font-weight:600;}
+  .pgr .q small, .pgr .lc small{display:block; font-size:12px; color:var(--ink-soft);}
+  .pgr .tags{display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end;}
+  .pgr .tag{font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px; border:1px solid var(--line); color:var(--ink-soft); white-space:nowrap;}
+  .pgr .tag.ok{color:var(--teal-deep); border-color:var(--teal-mid);}
+  @media (max-width:960px) and (min-width:681px){ .pgr{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,.9fr) 190px;} }
+  @media (max-width:680px){
+    .pgr{grid-template-columns:1fr 1fr;}
+    .pgr .nm{grid-column:1/-1;}
+    .pgr .tags{grid-column:1/-1; justify-content:flex-start;}
+  }
+  .vazio{font-size:13px; color:var(--ink-soft); padding:20px 0;}
+  .count-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 10px;}
+</style>
+
+<div class="wrap">
+
+  <!-- ABAS:INICIO (gerado por inserir_abas.py; mesmo bloco em todas as páginas do painel) -->
+<style>
+  .abas{display:flex; gap:4px; padding:4px; margin:0 0 26px; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
+  .abas::-webkit-scrollbar{display:none;}
+  .abas .aba{display:flex; align-items:center; gap:8px; flex:1 0 auto; justify-content:center; padding:10px 14px; border-radius:9px;
+    font:500 13.5px/1.2 'Work Sans', ui-sans-serif, system-ui, sans-serif; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+    transition:background .15s, color .15s;}
+  .abas .aba svg{width:17px; height:17px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .abas a.aba:hover{background:var(--teal-tint); color:var(--ink);}
+  .abas a.aba:focus-visible{outline:2px solid var(--teal-deep); outline-offset:1px;}
+  .abas .aba[aria-current="page"]{background:var(--teal-deep); color:var(--paper-raised); font-weight:600;}
+  .abas .aba-breve{cursor:default; opacity:.7;}
+  .abas .aba-breve em{font-style:normal; font-size:10.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold); background:var(--gold-tint); padding:2px 6px; border-radius:20px;}
+  @media (max-width:560px){
+    .abas{gap:2px;}
+    .abas .aba{flex:1 0 auto; padding:9px 8px; font-size:12.5px; gap:5px;}
+    .abas .aba svg, .abas .aba .lg{display:none;}
+    .abas .aba-breve em{font-size:9.5px; padding:2px 5px;}
+  }
+</style>
+<nav class="abas" aria-label="Páginas do painel">
+  <a class="aba" data-aba="inscricoes" href="./">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Inscrições
+  </a>
+  <a class="aba" data-aba="acompanhamento" href="acompanhamento.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 11.5l2 2 4-4.5"/></svg>Acompanhamento<span class="lg"> dos PGs</span>
+  </a>
+  <a class="aba" data-aba="mapa" aria-current="page" href="mapa.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Mapa<span class="lg"> dos PGs</span>
+  </a>
+</nav>
+<!-- ABAS:FIM -->
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
+      <h1>Mapa dos PGs</h1>
+      <p>Onde e quando os Pequenos Grupos se reúnem, e onde moram os membros e frequentadores da igreja.</p>
+    </div>
+    <div class="refresh-badge">
+      <span class="refresh-dot"></span>
+      <span>Atualizado em <strong id="snapDate">—</strong><br>Fonte: cadastro de PGs 2026</span>
+    </div>
+  </div>
+
+  <div class="kpi4" id="kpis"></div>
+
+  <section>
+    <div class="sec-head">
+      <h2>Mapa de São Paulo</h2>
+      <span class="sec-sub">localização aproximada, pelo bairro</span>
+    </div>
+    <div class="card map-card">
+      <div class="map-tools">
+        <div class="toggles" role="group" aria-label="Camadas do mapa">
+          <button type="button" id="tgPgs" aria-pressed="true"><i style="background:var(--teal-deep)"></i>PGs</button>
+          <button type="button" id="tgMem" aria-pressed="true"><i style="background:var(--gold)"></i>Onde moram membros e frequentadores</button>
+        </div>
+        <span class="map-note">Toque num círculo para ver os PGs daquele lugar.</span>
+      </div>
+      <div id="mapa" role="region" aria-label="Mapa dos PGs em São Paulo"></div>
+      <div class="map-foot" id="mapFoot"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid2">
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:6px;">Onde moram os membros e frequentadores</div>
+        <p class="count-note" id="memSub"></p>
+        <div class="barlist2" id="memList"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:6px;">Dias de encontro dos PGs</div>
+        <p class="count-note" id="diaSub"></p>
+        <div class="barlist2" id="diaList"></div>
+        <div class="eyebrow" style="margin:22px 0 10px;">Perfil dos PGs</div>
+        <div class="barlist2" id="segList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Todos os PGs</h2>
+      <span class="sec-sub" id="listCount"></span>
+    </div>
+    <div class="pg-tools">
+      <div class="chips" id="locChips" role="group" aria-label="Filtrar por local"></div>
+      <input class="busca" id="busca" type="search" placeholder="Buscar por nome, bairro ou dia" aria-label="Buscar PG">
+    </div>
+    <div id="pgList"></div>
+  </section>
+
+  <footer>
+    <span>Endereços, telefones e nomes de líderes não aparecem nesta página. Para participar de um PG, procure o acolhimento da igreja.</span>
+    <span id="footRefresh"></span>
+  </footer>
+</div>
+
+<script src="assets/leaflet/leaflet.js"></script>
+<script>
+const D = {"hoje_br": "13/10/2026", "pgs": [{"id": "AD-CAS-01", "nome": "PG Casais - Efatá", "area": "Adultos", "segmento": "Casais", "publico": "Casais com ou sem filhos", "dia": "Sexta-feira", "freq": "Semanal", "hora": "20h00", "local": "Vila Andrade", "ponto": "Vila Andrade", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-02", "nome": "PG Uno", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-03", "nome": "PG Casais 3D", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sábado", "freq": "Mensal", "hora": "18h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-04", "nome": "PG Aliança", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-05", "nome": "PG Somos Um", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "18h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-06", "nome": "PG Ágape", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "19h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-07", "nome": "PG Acolhimento", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "16h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-08", "nome": "PG Essência", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-09", "nome": "PG Raízes", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "Sábado", "freq": "Quinzenal (1º e 3º)", "hora": "18h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-10", "nome": "PG Casais Taboão", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Taboão da Serra", "ponto": "Taboão da Serra", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-11", "nome": "PG Uns aos Outros", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-12", "nome": "PG Videira", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-CAS-13", "nome": "PG Juntos em Cristo", "area": "Adultos", "segmento": "Casais", "publico": "Casais", "dia": "", "freq": "", "hora": "", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-ESP-01", "nome": "Vôlei Família", "area": "Adultos", "segmento": "Esporte", "publico": "Família", "dia": "Sexta-feira", "freq": "Semanal", "hora": "18h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Esportivo (é só chegar)", "verificar": false}, {"id": "AD-ESP-02", "nome": "Futebol Master", "area": "Adultos", "segmento": "Esporte", "publico": "Homens +30 anos", "dia": "Quarta-feira", "freq": "Semanal", "hora": "19h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Esportivo (é só chegar)", "verificar": false}, {"id": "AD-ESP-03", "nome": "Basquete", "area": "Adultos", "segmento": "Esporte", "publico": "Todos e famílias", "dia": "Quinta-feira", "freq": "Semanal", "hora": "19h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Esportivo (é só chegar)", "verificar": false}, {"id": "AD-FAM-01", "nome": "PG Familia e Adultos - Moema", "area": "Adultos", "segmento": "Família", "publico": "Adultos", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Moema", "ponto": "Moema", "tipo": "casa", "novos": "", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-02", "nome": "PG Familia e Adultos - CD", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos com crianças", "dia": "Quarta-feira", "freq": "Semanal", "hora": "20h00", "local": "Real Parque", "ponto": "Real Parque", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-03", "nome": "PG Adultos e Familia Vitória", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sexta-feira", "freq": "Quinzenal (1ª e 3ª)", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-FAM-04", "nome": "PG Familia e Adultos - LM", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sexta-feira", "freq": "Quinzenal", "hora": "20h00", "local": "Jardim Prudência", "ponto": "Jardim Prudência", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-05", "nome": "PG Familia e Adultos - MC", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sexta-feira", "freq": "Quinzenal", "hora": "20h00", "local": "Taboão da Serra", "ponto": "Taboão da Serra", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-06", "nome": "PG Adultos - Bonfiglioli", "area": "Adultos", "segmento": "Família", "publico": "Adultos (exceto casais com filhos pequenos)", "dia": "Quinta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Jardim Bonfiglioli", "ponto": "Jardim Bonfiglioli", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-07", "nome": "PG Adultos e Familia - L", "area": "Adultos", "segmento": "Família", "publico": "Adultos / Família", "dia": "Domingo", "freq": "Quinzenal (2º e 4º)", "hora": "16h00 (até 18h00)", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-FAM-08", "nome": "PG Familia e Adultos - RM", "area": "Adultos", "segmento": "Família", "publico": "Adultos e famílias", "dia": "Domingo", "freq": "Mensal", "hora": "Almoço", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-09", "nome": "PG Familia e Adultos - RV", "area": "Adultos", "segmento": "Família", "publico": "Adultos e famílias", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "19h00", "local": "Morumbi", "ponto": "Morumbi", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-10", "nome": "PG Adultos (Oração)", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Quarta-feira", "freq": "Semanal", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-FAM-11", "nome": "PG Familia e Adultos - WS", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Terça-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Morumbi", "ponto": "Morumbi", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-12", "nome": "PG Oração", "area": "Adultos", "segmento": "Família", "publico": "Livre / Oração", "dia": "Quinta-feira", "freq": "Semanal", "hora": "08h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-FAM-13", "nome": "PG Cristiformes - LR", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sábado", "freq": "Quinzenal", "hora": "18h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-14", "nome": "PG Familia Kids - AS", "area": "Adultos", "segmento": "Família", "publico": "Família", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-15", "nome": "PG Casais - MA", "area": "Adultos", "segmento": "Família", "publico": "Casais", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-16", "nome": "PG Casais - AC", "area": "Adultos", "segmento": "Família", "publico": "Casais", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "20h00", "local": "Santo Amaro / Congonhas", "ponto": "Santo Amaro / Congonhas", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-17", "nome": "PG Familia e Adultos - JM", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sábado", "freq": "Quinzenal", "hora": "20h00", "local": "Vila Andrade", "ponto": "Vila Andrade", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-18", "nome": "PG Familia e Adultos - LC", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sexta-feira", "freq": "Quinzenal (1ª e 3ª)", "hora": "20h00", "local": "Vila Andrade", "ponto": "Vila Andrade", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-19", "nome": "PG Familia e Adultos - CT", "area": "Adultos", "segmento": "Família", "publico": "Família e adultos", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "20h00", "local": "Vila Progredior", "ponto": "Vila Progredior", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-20", "nome": "PG Casais - CP", "area": "Adultos", "segmento": "Família", "publico": "Casais", "dia": "Domingo", "freq": "Mensal", "hora": "Após o culto das 11h (almoço)", "local": "Vila Monte Alegre", "ponto": "Vila Monte Alegre", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-21", "nome": "PG Familia e Adultos - VA", "area": "Adultos", "segmento": "Família", "publico": "Família / Adultos", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "18h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-FAM-22", "nome": "PG Casais - ME", "area": "Adultos", "segmento": "Família", "publico": "Casais", "dia": "Sexta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "19h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "", "convite": "Fechado", "verificar": true}, {"id": "AD-FAM-23", "nome": "PG Familia e Adultos - KP", "area": "Adultos", "segmento": "Família", "publico": "Adultos e famílias", "dia": "Sábado", "freq": "Quinzenal", "hora": "20h00", "local": "Igreja e online", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": true}, {"id": "AD-FAM-24", "nome": "PG Casais - JC", "area": "Adultos", "segmento": "Família", "publico": "Casais (exceto com filhos pequenos)", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "16h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Não", "convite": "Fechado", "verificar": true}, {"id": "AD-HOM-01", "nome": "PG Homens - A", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Terça-feira", "freq": "Quinzenal (1ª e 3ª)", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-HOM-02", "nome": "PG Homens Guerreiros", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Quarta-feira", "freq": "Semanal", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-HOM-03", "nome": "PG Homens (quintas)", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Quinta-feira", "freq": "Semanal", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-HOM-04", "nome": "PG Romanos", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Domingo", "freq": "Mensal", "hora": "09h00", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-HOM-05", "nome": "PG Homens - Quarta-feira - LG", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Quarta-feira", "freq": "Semanal", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-HOM-06", "nome": "PG Homens Online - HA", "area": "Adultos", "segmento": "Homens", "publico": "Homens", "dia": "Segunda-feira", "freq": "Semanal", "hora": "20h00", "local": "Online", "ponto": null, "tipo": "online", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-JOV-01", "nome": "PG Jovens (25 a 30 anos)", "area": "Adultos", "segmento": "Jovens adultos", "publico": "Jovens adultos", "dia": "", "freq": "", "hora": "", "local": "Vila Andrade", "ponto": "Vila Andrade", "tipo": "casa", "novos": "Sim", "convite": "", "verificar": false}, {"id": "AD-MUL-01", "nome": "PG Mulheres Oração (quinta-feira)", "area": "Adultos", "segmento": "Mulheres", "publico": "Mulheres", "dia": "Quinta-feira", "freq": "Semanal", "hora": "20h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-MUL-02", "nome": "PG Mulheres - CD", "area": "Adultos", "segmento": "Mulheres", "publico": "Mulheres (podem levar a filha adolescente)", "dia": "Quinta-feira", "freq": "Semanal", "hora": "20h00", "local": "Bairro a confirmar", "ponto": null, "tipo": "confirmar", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-MUL-03", "nome": "PG Mulheres 3ª idade - B", "area": "Adultos", "segmento": "Mulheres", "publico": "Mulheres (3ª idade)", "dia": "Quarta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "15h00", "local": "Brooklin", "ponto": "Brooklin", "tipo": "casa", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-MUL-04", "nome": "PG Mulheres - S", "area": "Adultos", "segmento": "Mulheres", "publico": "Mulheres", "dia": "Quinta-feira", "freq": "Quinzenal (2ª e 4ª)", "hora": "09h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-MUL-05", "nome": "PG Mulheres - A", "area": "Adultos", "segmento": "Mulheres", "publico": "Mulheres", "dia": "Terça-feira", "freq": "Quinzenal", "hora": "14h00", "local": "Online", "ponto": null, "tipo": "online", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-NOI-01", "nome": "PG Noivos e Recém-Casados", "area": "Adultos", "segmento": "Noivos", "publico": "Noivos e recém-casados", "dia": "Sábado", "freq": "Quinzenal (1º e 3º)", "hora": "18h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Fechado", "verificar": false}, {"id": "AD-SOL-01", "nome": "PG Deus Conosco", "area": "Adultos", "segmento": "Solteiros", "publico": "Solteiros, viúvos e divorciados", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "16h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "AD-SOL-02", "nome": "PG Conexão", "area": "Adultos", "segmento": "Solteiros", "publico": "Solteiros, divorciados e viúvos", "dia": "Quinta-feira", "freq": "Quinzenal", "hora": "20h00", "local": "Online", "ponto": null, "tipo": "online", "novos": "Sim", "convite": "Aberto", "verificar": false}, {"id": "NG-ADO-01", "nome": "99 Sheep", "area": "Nova Geração", "segmento": "Adolescentes", "publico": "Adolescentes 13/14 anos", "dia": "Definido pelos líderes", "freq": "Quinzenal", "hora": "Definido pelos líderes", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-ADO-02", "nome": "Isaiah Eagles", "area": "Nova Geração", "segmento": "Adolescentes", "publico": "Adolescentes 16/17 anos", "dia": "Definido pelos líderes", "freq": "Quinzenal", "hora": "Definido pelos líderes", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-ADO-03", "nome": "Lamb Of God", "area": "Nova Geração", "segmento": "Adolescentes", "publico": "Adolescentes 14/15 anos", "dia": "Definido pelos líderes", "freq": "Quinzenal", "hora": "Definido pelos líderes", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-ADO-04", "nome": "Red Sea", "area": "Nova Geração", "segmento": "Adolescentes", "publico": "Adolescentes 15/16/17 anos", "dia": "Definido pelos líderes", "freq": "Quinzenal", "hora": "Definido pelos líderes", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-ADO-05", "nome": "Stone Tablets", "area": "Nova Geração", "segmento": "Adolescentes", "publico": "Adolescentes 16/17 anos", "dia": "Definido pelos líderes", "freq": "Quinzenal", "hora": "Definido pelos líderes", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-01", "nome": "EPA 1", "area": "Nova Geração", "segmento": "EPA", "publico": "13 anos (último ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-02", "nome": "EPA 2", "area": "Nova Geração", "segmento": "EPA", "publico": "12 anos (1º ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-03", "nome": "EPA 3", "area": "Nova Geração", "segmento": "EPA", "publico": "12 anos (1º ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-04", "nome": "EPA 4", "area": "Nova Geração", "segmento": "EPA", "publico": "13 anos (último ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-05", "nome": "EPA 5", "area": "Nova Geração", "segmento": "EPA", "publico": "12 anos (1º ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-EPA-06", "nome": "EPA 6", "area": "Nova Geração", "segmento": "EPA", "publico": "13 anos (2º ano do EPA)", "dia": "Sábado ou domingo", "freq": "2x ao mês", "hora": "Variado", "local": "Local varia", "ponto": null, "tipo": "varia", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-JOV-01", "nome": "PG 2 ou mais", "area": "Nova Geração", "segmento": "Jovens", "publico": "Jovens 20 a 23 anos", "dia": "Sexta-feira", "freq": "Quinzenal", "hora": "19h30", "local": "Real Parque", "ponto": "Real Parque", "tipo": "casa", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-JOV-02", "nome": "PG Transição", "area": "Nova Geração", "segmento": "Jovens", "publico": "Jovens (MJ)", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "15h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-JOV-03", "nome": "PG Estaiada", "area": "Nova Geração", "segmento": "Jovens", "publico": "Jovens 20 a 25 anos", "dia": "Sexta-feira", "freq": "Semanal", "hora": "20h00", "local": "Morumbi", "ponto": "Morumbi", "tipo": "casa", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-JOV-04", "nome": "PG Jovens +25 - M", "area": "Nova Geração", "segmento": "Jovens", "publico": "Jovens +25 anos", "dia": "Domingo", "freq": "Quinzenal (1º e 3º)", "hora": "15h30", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Pela liderança", "verificar": false}, {"id": "NG-JOV-05", "nome": "PG Portal", "area": "Nova Geração", "segmento": "Jovens", "publico": "Jovens (MJ)", "dia": "Sábado", "freq": "Quinzenal (2º e 4º)", "hora": "16h00", "local": "Na igreja (Vila Andrade)", "ponto": "sede", "tipo": "igreja", "novos": "Sim", "convite": "Pela liderança", "verificar": false}], "pontos": {"sede": {"nome": "Igreja Batista Morumbi", "lat": -23.6222, "lng": -46.729}, "Vila Andrade": {"nome": "Vila Andrade", "lat": -23.636, "lng": -46.738}, "Real Parque": {"nome": "Real Parque", "lat": -23.6045, "lng": -46.706}, "Jardim Prudência": {"nome": "Jardim Prudência", "lat": -23.664, "lng": -46.656}, "Taboão da Serra": {"nome": "Taboão da Serra", "lat": -23.62, "lng": -46.785}, "Jardim Bonfiglioli": {"nome": "Jardim Bonfiglioli", "lat": -23.579, "lng": -46.735}, "Morumbi": {"nome": "Morumbi", "lat": -23.599, "lng": -46.721}, "Santo Amaro / Congonhas": {"nome": "Santo Amaro / Congonhas", "lat": -23.632, "lng": -46.67}, "Vila Progredior": {"nome": "Vila Progredior", "lat": -23.587, "lng": -46.717}, "Vila Monte Alegre": {"nome": "Vila Monte Alegre", "lat": -23.631, "lng": -46.64}, "Brooklin": {"nome": "Brooklin", "lat": -23.617, "lng": -46.693}, "Moema": {"nome": "Moema", "lat": -23.601, "lng": -46.664}}, "membros": {"regioes": [{"nome": "Vila Andrade / Campo Limpo", "n": 1687, "lat": -23.635, "lng": -46.745}, {"nome": "Morumbi / Vila Sônia", "n": 696, "lat": -23.595, "lng": -46.73}, {"nome": "Campo Belo", "n": 463, "lat": -23.623, "lng": -46.668}, {"nome": "Capão Redondo", "n": 453, "lat": -23.67, "lng": -46.778}, {"nome": "Santo Amaro", "n": 364, "lat": -23.653, "lng": -46.708}, {"nome": "Taboão da Serra", "n": 354, "lat": -23.62, "lng": -46.785}, {"nome": "Butantã", "n": 269, "lat": -23.572, "lng": -46.708}, {"nome": "Jabaquara", "n": 172, "lat": -23.648, "lng": -46.645}, {"nome": "Itaim Bibi", "n": 151, "lat": -23.584, "lng": -46.68}, {"nome": "Vila Leopoldina / Jaguaré / Rio Pequeno", "n": 135, "lat": -23.555, "lng": -46.745}, {"nome": "Cidade Dutra / Grajaú / Parelheiros", "n": 115, "lat": -23.74, "lng": -46.7}, {"nome": "Itapecerica da Serra", "n": 108, "lat": -23.717, "lng": -46.849}, {"nome": "Cidade Ademar / Pedreira", "n": 108, "lat": -23.68, "lng": -46.65}, {"nome": "Saúde", "n": 103, "lat": -23.619, "lng": -46.638}, {"nome": "Vila Mariana / Moema", "n": 92, "lat": -23.595, "lng": -46.646}, {"nome": "Capela do Socorro", "n": 79, "lat": -23.69, "lng": -46.71}, {"nome": "Pinheiros / Alto de Pinheiros", "n": 78, "lat": -23.56, "lng": -46.7}, {"nome": "Lapa / Perdizes", "n": 49, "lat": -23.53, "lng": -46.69}, {"nome": "São Bernardo do Campo", "n": 43, "lat": -23.694, "lng": -46.565}, {"nome": "Jardim Paulista", "n": 42, "lat": -23.57, "lng": -46.66}, {"nome": "Osasco", "n": 39, "lat": -23.532, "lng": -46.792}, {"nome": "Santo André", "n": 37, "lat": -23.663, "lng": -46.538}, {"nome": "Carapicuíba", "n": 37, "lat": -23.523, "lng": -46.836}, {"nome": "Santa Cecília / Consolação", "n": 29, "lat": -23.542, "lng": -46.655}, {"nome": "Mooca / Vila Prudente / Água Rasa", "n": 27, "lat": -23.565, "lng": -46.59}, {"nome": "Barueri", "n": 23, "lat": -23.511, "lng": -46.876}, {"nome": "Pirituba / São Domingos", "n": 22, "lat": -23.49, "lng": -46.73}, {"nome": "Consolação / Bela Vista", "n": 18, "lat": -23.558, "lng": -46.645}, {"nome": "Ipiranga / Sacomã", "n": 18, "lat": -23.6, "lng": -46.6}, {"nome": "São Caetano do Sul", "n": 17, "lat": -23.623, "lng": -46.555}, {"nome": "Jandira", "n": 16, "lat": -23.528, "lng": -46.902}, {"nome": "Santana de Parnaíba", "n": 16, "lat": -23.444, "lng": -46.918}, {"nome": "Liberdade / Cambuci", "n": 15, "lat": -23.56, "lng": -46.633}, {"nome": "Diadema", "n": 14, "lat": -23.686, "lng": -46.623}, {"nome": "Santana", "n": 13, "lat": -23.5, "lng": -46.625}, {"nome": "Embu-Guaçu", "n": 11, "lat": -23.832, "lng": -46.811}, {"nome": "São Lucas / Sapopemba", "n": 10, "lat": -23.6, "lng": -46.53}, {"nome": "Guarulhos", "n": 6, "lat": -23.454, "lng": -46.533}, {"nome": "Tremembé", "n": 6, "lat": -23.47, "lng": -46.6}, {"nome": "Casa Verde", "n": 6, "lat": -23.51, "lng": -46.66}, {"nome": "Mandaqui", "n": 6, "lat": -23.485, "lng": -46.63}, {"nome": "Mogi das Cruzes", "n": 5, "lat": -23.522, "lng": -46.188}, {"nome": "Freguesia do Ó / Pirituba", "n": 5, "lat": -23.5, "lng": -46.695}, {"nome": "Jaraguá / Perus", "n": 4, "lat": -23.45, "lng": -46.74}, {"nome": "Tatuapé / Vila Formosa", "n": 4, "lat": -23.545, "lng": -46.56}, {"nome": "Belém / Brás / Pari", "n": 4, "lat": -23.54, "lng": -46.61}, {"nome": "Brasilândia", "n": 3, "lat": -23.47, "lng": -46.69}, {"nome": "Bom Retiro / Barra Funda", "n": 2, "lat": -23.525, "lng": -46.65}, {"nome": "Penha", "n": 2, "lat": -23.525, "lng": -46.545}, {"nome": "Vila Carrão", "n": 2, "lat": -23.55, "lng": -46.535}, {"nome": "Tucuruvi / Jaçanã", "n": 2, "lat": -23.46, "lng": -46.59}, {"nome": "Vila Matilde / Artur Alvim", "n": 1, "lat": -23.54, "lng": -46.515}, {"nome": "São Mateus", "n": 1, "lat": -23.605, "lng": -46.48}], "total": 6613, "sem_bairro": 561, "fora": 70}};
+const num = n => n.toLocaleString('pt-BR');
+const pct = (n, d) => d ? Math.round(100 * n / d) + '%' : '0%';
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.getElementById('snapDate').textContent = D.hoje_br;
+document.getElementById('footRefresh').textContent = 'Atualizado em ' + D.hoje_br;
+
+const PGS = D.pgs;
+const GRUPO = s => ({'Família':'Família e adultos','Casais':'Casais','Noivos':'Noivos','Homens':'Homens','Mulheres':'Mulheres',
+  'Solteiros':'Solteiros, divorciados e viúvos','Jovens adultos':'Jovens','Jovens':'Jovens','Adolescentes':'Adolescentes e EPA',
+  'EPA':'Adolescentes e EPA','Esporte':'Esporte'})[s] || s;
+
+// ---- números
+(function(){
+  const n = t => PGS.filter(p => p.tipo === t).length;
+  const novos = PGS.filter(p => /^sim/i.test(p.novos)).length;
+  const tiles = [
+    [PGS.length, 'PGs ativos no cadastro', 'accent'],
+    [n('igreja'), 'se reúnem na igreja'],
+    [n('casa'), 'em casas e apartamentos'],
+    [n('online'), 'online'],
+  ];
+  const box = document.getElementById('kpis');
+  tiles.forEach(([v, l, c]) => box.appendChild(el('div', 'tile ' + (c || ''), `<div class="num">${num(v)}</div><div class="lbl">${l}</div>`)));
+})();
+
+// ---- mapa
+const escuro = matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light';
+const mapa = L.map('mapa', {scrollWheelZoom:false, zoomControl:true}).setView([D.pontos.sede.lat, D.pontos.sede.lng], 12);
+L.tileLayer(`https://{s}.basemaps.cartocdn.com/${escuro ? 'dark_all' : 'light_all'}/{z}/{x}/{y}{r}.png`, {
+  maxZoom: 18, subdomains: 'abcd',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+}).addTo(mapa);
+
+// membros: um círculo por região, área proporcional à quantidade
+const camadaMem = L.layerGroup();
+const gold = getComputedStyle(document.documentElement).getPropertyValue('--gold').trim() || '#B87E22';
+D.membros.regioes.forEach(r => {
+  L.circle([r.lat, r.lng], {radius: 75 * Math.sqrt(r.n), color: gold, weight: 1, opacity: .7, fillColor: gold, fillOpacity: .22})
+    .bindTooltip(`${esc(r.nome)}: ${num(r.n)} pessoas`, {direction:'top', sticky:true})
+    .addTo(camadaMem);
+});
+camadaMem.addTo(mapa);
+
+// PGs: um marcador por lugar, com o número de PGs
+const camadaPgs = L.layerGroup();
+const porPonto = {};
+PGS.filter(p => p.ponto).forEach(p => (porPonto[p.ponto] = porPonto[p.ponto] || []).push(p));
+const ICO_IGREJA = '<svg viewBox="0 0 24 24"><path d="M12 2v5M9.5 4.5h5"/><path d="M5 21V11l7-4 7 4v10z"/></svg>';
+Object.entries(porPonto).forEach(([k, lista]) => {
+  const pt = D.pontos[k], sede = k === 'sede', n = lista.length;
+  const s = sede ? 40 : Math.round(24 + 4 * Math.sqrt(n));
+  const icon = L.divIcon({className:'', iconSize:[s, s], iconAnchor:[s/2, s/2],
+    html:`<div class="pin ${sede ? 'sede' : ''}" style="width:${s}px;height:${s}px">${sede ? ICO_IGREJA + n : n}</div>`});
+  const itens = lista.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')).map(p =>
+    `<li>${esc(p.nome)}<small>${esc([p.dia, p.hora].filter(Boolean).join(' · ') || 'Dia a confirmar')}${p.publico ? ' · ' + esc(p.publico) : ''}</small></li>`).join('');
+  L.marker([pt.lat, pt.lng], {icon, title: `${pt.nome}: ${n} PG${n > 1 ? 's' : ''}`, zIndexOffset: sede ? 1000 : 0})
+    .bindPopup(`<h4>${sede ? 'Na igreja' : esc(pt.nome)} · ${n} PG${n > 1 ? 's' : ''}</h4><ul>${itens}</ul>`)
+    .addTo(camadaPgs);
+});
+camadaPgs.addTo(mapa);
+
+function alterna(btn, camada){
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', on);
+    on ? camada.addTo(mapa) : mapa.removeLayer(camada);
+  });
+}
+alterna(document.getElementById('tgPgs'), camadaPgs);
+alterna(document.getElementById('tgMem'), camadaMem);
+
+(function(){
+  const fora = PGS.filter(p => !p.ponto);
+  const by = t => fora.filter(p => p.tipo === t).length;
+  const partes = [];
+  if (by('online')) partes.push(`${by('online')} online`);
+  if (by('varia')) partes.push(`${by('varia')} com local que varia`);
+  if (by('confirmar')) partes.push(`${by('confirmar')} com bairro a confirmar`);
+  document.getElementById('mapFoot').innerHTML =
+    `O círculo dourado de cada região cresce com o número de membros e frequentadores que moram ali. ` +
+    `Os pontos verdes mostram o bairro onde o PG se reúne, nunca o endereço. ` +
+    (partes.length ? `Ficam fora do mapa, mas estão na lista abaixo: ${partes.join(', ')}.` : '');
+})();
+
+// ---- listas de barras
+function barras(id, itens, cor, total){
+  const box = document.getElementById(id), mx = Math.max(...itens.map(i => i[1]), 1);
+  itens.forEach(([l, v]) => {
+    const r = el('div', 'br');
+    r.innerHTML = `<span class="l">${esc(l)}</span><span class="v">${num(v)}${total ? ` <span style="color:var(--ink-soft);font-weight:500;font-size:12px">${pct(v, total)}</span>` : ''}</span>` +
+      `<div class="t"><div style="width:${100 * v / mx}%;background:${cor}"></div></div>`;
+    box.appendChild(r);
+  });
+}
+(function(){
+  const m = D.membros, top = m.regioes.slice(0, 10);
+  const resto = m.regioes.slice(10).reduce((s, r) => s + r.n, 0);
+  const itens = top.map(r => [r.nome, r.n]);
+  if (resto) itens.push(['Outras regiões da Grande São Paulo', resto]);
+  if (m.fora) itens.push(['Fora da Grande São Paulo', m.fora]);
+  if (m.sem_bairro) itens.push(['Sem bairro no cadastro', m.sem_bairro]);
+  document.getElementById('memSub').textContent = `${num(m.total)} membros e frequentadores no cadastro da igreja.`;
+  barras('memList', itens, 'var(--gold)', m.total);
+
+  const DIAS = ['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'];
+  const dias = DIAS.map(d => [d, PGS.filter(p => p.dia === d).length]);
+  const outros = PGS.length - dias.reduce((s, d) => s + d[1], 0);
+  if (outros) dias.push(['Varia ou a confirmar', outros]);
+  document.getElementById('diaSub').textContent = 'Quantos PGs se reúnem em cada dia da semana.';
+  barras('diaList', dias, 'var(--teal-deep)');
+
+  const segs = {};
+  PGS.forEach(p => { const g = GRUPO(p.segmento); segs[g] = (segs[g] || 0) + 1; });
+  barras('segList', Object.entries(segs).sort((a, b) => b[1] - a[1]), 'var(--teal-mid)');
+})();
+
+// ---- todos os PGs: um grupo recolhível por perfil
+(function(){
+  const lista = document.getElementById('pgList'), busca = document.getElementById('busca');
+  const ORDEM = ['Família e adultos','Casais','Noivos','Homens','Mulheres','Solteiros, divorciados e viúvos','Jovens','Adolescentes e EPA','Esporte'];
+  const LOCS = [['todos','Qualquer local'],['igreja','Na igreja'],['casa','Em casa'],['online','Online']];
+  let loc = 'todos';
+  const abertos = new Set();
+  const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  function linha(p){
+    const quando = [p.dia, p.hora].filter(Boolean).join(' · ');
+    const tags = (/^sim/i.test(p.novos) ? '<span class="tag ok">Recebendo novos</span>' : '') +
+      (p.convite === 'Aberto' ? '<span class="tag ok">Convite aberto</span>' : '') +
+      (/esportivo/i.test(p.convite) ? '<span class="tag ok">É só chegar</span>' : '') +
+      (p.verificar ? '<span class="tag">Dados em revisão</span>' : '');
+    return `<div class="pgr"><div class="nm">${esc(p.nome)}${p.publico ? `<small>${esc(p.publico)}</small>` : ''}</div>` +
+      `<div class="q"><b>${esc(quando || 'Dia a confirmar')}</b>${p.freq ? `<small>${esc(p.freq)}</small>` : ''}</div>` +
+      `<div class="lc">${esc(p.local)}</div><div class="tags">${tags}</div></div>`;
+  }
+  function desenhar(){
+    const q = norm(busca.value.trim());
+    const vis = PGS.filter(p => (loc === 'todos' || p.tipo === loc || (loc === 'online' && p.local === 'Igreja e online'))
+      && (!q || norm([p.nome, p.local, p.dia, p.publico, GRUPO(p.segmento)].join(' ')).includes(q)));
+    document.getElementById('listCount').textContent = `${vis.length} de ${PGS.length} PGs`;
+    lista.innerHTML = '';
+    if (!vis.length){ lista.appendChild(el('div', 'vazio', 'Nenhum PG com esses filtros.')); return; }
+    ORDEM.forEach(g => {
+      const doGrupo = vis.filter(p => GRUPO(p.segmento) === g).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+      if (!doGrupo.length) return;
+      const d = el('details', 'grp');
+      d.open = abertos.has(g) || !!q;
+      d.innerHTML = `<summary>${esc(g)} <span class="cnt">${doGrupo.length} PG${doGrupo.length > 1 ? 's' : ''}</span>${CHEV}</summary>` + doGrupo.map(linha).join('');
+      d.addEventListener('toggle', () => { if (!q) d.open ? abertos.add(g) : abertos.delete(g); });
+      lista.appendChild(d);
+    });
+  }
+  const box = document.getElementById('locChips');
+  LOCS.forEach(([k, rot]) => {
+    const b = el('button', '', rot); b.type = 'button'; b.setAttribute('aria-pressed', k === loc);
+    b.onclick = () => { loc = k; box.querySelectorAll('button').forEach(o => o.setAttribute('aria-pressed', o === b)); desenhar(); };
+    box.appendChild(b);
+  });
+  busca.addEventListener('input', desenhar);
+  desenhar();
+})();
+</script>
