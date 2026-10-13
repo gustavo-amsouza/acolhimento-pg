@@ -291,6 +291,11 @@
 
   #tip{position:fixed; z-index:10; pointer-events:none; background:var(--ink); color:var(--paper-raised); font-size:12px; line-height:1.4;
     padding:7px 10px; border-radius:7px; max-width:260px; opacity:0; transition:opacity .1s;}
+  /* selo discreto de página nova (pedido do Pr. Gustavo, 13/10) */
+  .beta{display:inline-flex; align-items:center; gap:5px; margin-left:8px; padding:2px 8px; border-radius:20px; vertical-align:1px;
+    background:var(--gold-tint); color:var(--gold); font-size:10px; font-weight:600; letter-spacing:.06em; white-space:nowrap;}
+  .beta::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.8;}
+  @media (max-width:560px){ .beta{display:flex; width:max-content; margin:6px 0 0;} }
 </style>
 
 <div class="wrap">
@@ -332,7 +337,7 @@
 
   <div class="masthead">
     <div>
-      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
+      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos <span class="beta" title="Esta página é nova e ainda está sendo ajustada. Pode mudar nas próximas semanas.">Página nova &middot; em construção</span></div>
       <h1>Acompanhamento dos PGs</h1>
       <p>Como estão os inscritos que o acolhimento encaminhou aos líderes, a partir das planilhas de acompanhamento que cada PG preenche.</p>
     </div>
