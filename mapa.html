@@ -422,7 +422,7 @@ const GRUPO = s => ({'Família':'Família e adultos','Casais':'Casais','Noivos':
     [n('igreja'), 'se reúnem na igreja'],
     [n('casa'), 'em casas e apartamentos'],
     [n('online'), 'online'],
-    [PGS.length - n('igreja') - n('casa') - n('online'), 'com local que varia ou a confirmar'],
+    [PGS.length - n('igreja') - n('casa') - n('online'), 'com local que varia ou a confirmar (NG)'],
   ];
   const box = document.getElementById('kpis');
   tiles.forEach(([v, l, c]) => box.appendChild(el('div', 'tile ' + (c || ''), `<div class="num">${num(v)}</div><div class="lbl">${l}</div>`)));
