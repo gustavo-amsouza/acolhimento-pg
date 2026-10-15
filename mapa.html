@@ -191,9 +191,9 @@
 <script src="assets/mapa-base.js"></script>
 <style>
   /* ===== mapa: estilos próprios (o resto vem do painel de inscrições) ===== */
-  .kpi4{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px;
+  .kpi4{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px;
     overflow:hidden; margin:28px 0 0; box-shadow:var(--shadow);}
-  @media (max-width:680px){ .kpi4{grid-template-columns:1fr 1fr;} }
+  @media (max-width:680px){ .kpi4{grid-template-columns:1fr 1fr;} .kpi4 .tile.accent{grid-column:1/-1;} }
   .kpi4 .tile{background:var(--paper-raised); padding:18px;}
   .kpi4 .num{font-size:32px; font-weight:480; line-height:1; font-variant-numeric:tabular-nums;}
   .kpi4 .lbl{margin-top:6px; font-size:12.5px; color:var(--ink-soft); font-weight:500;}
@@ -422,6 +422,7 @@ const GRUPO = s => ({'Família':'Família e adultos','Casais':'Casais','Noivos':
     [n('igreja'), 'se reúnem na igreja'],
     [n('casa'), 'em casas e apartamentos'],
     [n('online'), 'online'],
+    [PGS.length - n('igreja') - n('casa') - n('online'), 'com local que varia ou a confirmar'],
   ];
   const box = document.getElementById('kpis');
   tiles.forEach(([v, l, c]) => box.appendChild(el('div', 'tile ' + (c || ''), `<div class="num">${num(v)}</div><div class="lbl">${l}</div>`)));
