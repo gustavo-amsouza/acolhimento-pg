@@ -15,6 +15,8 @@
     --teal-tint:#E4EDE9;
     --gold:#B87E22;
     --gold-tint:#F3E4C8;
+    --navy:#1F3A5F;
+    --navy-tint:#E2E8F1;
     --shadow: 0 1px 2px rgba(22,33,29,.06), 0 8px 24px -12px rgba(22,33,29,.18);
 
     /* paleta de dados validada (dataviz skill) — vivida de propósito */
@@ -46,6 +48,10 @@
       --teal-tint:#16302B;
       --gold:#E4A94F;
       --gold-tint:#2E2313;
+    --navy:#7FA3D1;
+    --navy-tint:#18263A;
+      --navy:#7FA3D1;
+      --navy-tint:#18263A;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
 
       --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
@@ -67,6 +73,8 @@
     --teal-tint:#16302B;
     --gold:#E4A94F;
     --gold-tint:#2E2313;
+    --navy:#7FA3D1;
+    --navy-tint:#18263A;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
 
     --chart-1:#3987e5; --chart-2:#d95926; --chart-3:#199e70; --chart-4:#c98500;
@@ -252,6 +260,17 @@
   .kpi .k-sub{font-size:12px; color:var(--ink-soft); margin-top:auto; padding-top:8px; line-height:1.4;}
 
   /* funil do líder */
+  .pie-wrap{display:flex; align-items:center; gap:24px; flex-wrap:wrap;}
+  .pie-wrap svg{width:220px; height:154px; flex:none;}
+  @media (max-width:680px){ .pie-wrap{justify-content:center;} }
+  .pie-leg{display:flex; flex-direction:column; gap:14px; min-width:170px; flex:1;}
+  .pie-leg .it{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.35;}
+  .pie-leg i{width:12px; height:12px; border-radius:3px; flex:none; margin-top:3px;}
+  .pie-leg b{display:block; font-size:22px; font-variant-numeric:tabular-nums;}
+  .pie-leg .pc{color:var(--ink-soft); font-size:12.5px;}
+  .dir-note{font-size:12.5px; color:var(--ink-soft); margin:16px 0 0; line-height:1.5;}
+  #funil .fun-track{background:var(--navy-tint);}
+  #funil .fun-track div{background:var(--navy);}
   .fun-row{margin-bottom:14px;}
   .fun-row:last-child{margin-bottom:0;}
   .fun-top{display:flex; justify-content:space-between; gap:10px; font-size:13px; margin-bottom:6px;}
@@ -399,11 +418,20 @@
 
   <!-- extras -->
   <section>
-    <div>
+    <div class="grid2">
       <div class="card">
         <div class="eyebrow" style="margin-bottom:6px;">Do contato do líder até o PG</div>
         <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);" id="funSub"></p>
         <div id="funil"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:6px;">Pessoas que entraram via convite em um Pequeno Grupo</div>
+        <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);">Quem o líder acrescentou na planilha sem passar pelo acolhimento, comparado com quem veio pelas fichas do acolhimento.</p>
+        <div class="pie-wrap">
+          <svg id="dirPie" viewBox="0 0 160 112" role="img" aria-label="Gráfico de pizza: via acolhimento e via convite"></svg>
+          <div class="pie-leg" id="dirLeg"></div>
+        </div>
+        <p class="dir-note" id="dirNote"></p>
       </div>
     </div>
   </section>
@@ -440,7 +468,7 @@
 <div id="tip" role="tooltip"></div>
 
 <script>
-const D = {"hoje_br": "16/10/2026", "pgs": {"total": 28, "responderam": 16}, "por_pg": [{"pg": "PG Adultos e Familia - L", "total": 29, "feitas": 29}, {"pg": "PG Cristiformes - LR", "total": 22, "feitas": 22}, {"pg": "PG Mulheres Oração (quinta-feira)", "total": 17, "feitas": 17}, {"pg": "PG Conexão", "total": 7, "feitas": 7}, {"pg": "PG Mulheres - A", "total": 3, "feitas": 3}, {"pg": "PG Familia e Adultos - KP", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - LM", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - Moema", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - WS", "total": 2, "feitas": 2}, {"pg": "PG Homens - A", "total": 2, "feitas": 2}, {"pg": "PG Homens (quintas)", "total": 1, "feitas": 1}, {"pg": "PG Homens Guerreiros", "total": 1, "feitas": 1}, {"pg": "PG Mulheres - S", "total": 1, "feitas": 1}, {"pg": "PG Deus Conosco", "total": 41, "feitas": 22}, {"pg": "PG Homens - Quarta-feira - LG", "total": 3, "feitas": 1}, {"pg": "PG Familia e Adultos - VA", "total": 13, "feitas": 4}, {"pg": "PG Adultos e Familia Vitória", "total": 26, "feitas": 0}, {"pg": "Min. Jovens (triagem)", "total": 16, "feitas": 0}, {"pg": "Min. de Casais (triagem)", "total": 15, "feitas": 0}, {"pg": "PG Adultos (Oração)", "total": 15, "feitas": 0}, {"pg": "PG Casais - Efatá", "total": 9, "feitas": 0}, {"pg": "PG Familia Kids - AS", "total": 9, "feitas": 0}, {"pg": "PG Familia e Adultos - MC", "total": 7, "feitas": 0}, {"pg": "PG Noivos e Recém-Casados", "total": 4, "feitas": 0}, {"pg": "PG Jovens (25 a 30 anos)", "total": 3, "feitas": 0}, {"pg": "PG Familia e Adultos - CT", "total": 2, "feitas": 0}, {"pg": "PG Homens Online - HA", "total": 2, "feitas": 0}, {"pg": "EPA (pré-adolescentes)", "total": 1, "feitas": 0}], "encaminhamentos": {"total": 257, "feitas": 118}, "pessoas_nas_planilhas": 212, "com_retorno": 107, "inscritos": 208, "blocos": {"em_pg": 24, "visitou": 10, "acompanhamento": 26, "outro_pg": 5, "sem_resposta_lider": 42, "nao_agora": 0, "aguardando": 101}, "funil_lider": {"com_retorno": 107, "respondeu": 78, "foi": 34, "em_pg": 24}, "espera": {"ate30": 23, "30a90": 20, "mais90": 87, "sem_data": 9}, "ajuda_pastor": 6};
+const D = {"hoje_br": "16/10/2026", "pgs": {"total": 28, "responderam": 16}, "por_pg": [{"pg": "PG Adultos e Familia - L", "total": 29, "feitas": 29}, {"pg": "PG Cristiformes - LR", "total": 22, "feitas": 22}, {"pg": "PG Mulheres Oração (quinta-feira)", "total": 17, "feitas": 17}, {"pg": "PG Conexão", "total": 7, "feitas": 7}, {"pg": "PG Mulheres - A", "total": 3, "feitas": 3}, {"pg": "PG Familia e Adultos - KP", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - LM", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - Moema", "total": 2, "feitas": 2}, {"pg": "PG Familia e Adultos - WS", "total": 2, "feitas": 2}, {"pg": "PG Homens - A", "total": 2, "feitas": 2}, {"pg": "PG Homens (quintas)", "total": 1, "feitas": 1}, {"pg": "PG Homens Guerreiros", "total": 1, "feitas": 1}, {"pg": "PG Mulheres - S", "total": 1, "feitas": 1}, {"pg": "PG Deus Conosco", "total": 41, "feitas": 22}, {"pg": "PG Homens - Quarta-feira - LG", "total": 3, "feitas": 1}, {"pg": "PG Familia e Adultos - VA", "total": 13, "feitas": 4}, {"pg": "PG Adultos e Familia Vitória", "total": 26, "feitas": 0}, {"pg": "Min. Jovens (triagem)", "total": 16, "feitas": 0}, {"pg": "Min. de Casais (triagem)", "total": 15, "feitas": 0}, {"pg": "PG Adultos (Oração)", "total": 15, "feitas": 0}, {"pg": "PG Casais - Efatá", "total": 9, "feitas": 0}, {"pg": "PG Familia Kids - AS", "total": 9, "feitas": 0}, {"pg": "PG Familia e Adultos - MC", "total": 7, "feitas": 0}, {"pg": "PG Noivos e Recém-Casados", "total": 4, "feitas": 0}, {"pg": "PG Jovens (25 a 30 anos)", "total": 3, "feitas": 0}, {"pg": "PG Familia e Adultos - CT", "total": 2, "feitas": 0}, {"pg": "PG Homens Online - HA", "total": 2, "feitas": 0}, {"pg": "EPA (pré-adolescentes)", "total": 1, "feitas": 0}], "encaminhamentos": {"total": 257, "feitas": 118}, "pessoas_nas_planilhas": 212, "com_retorno": 107, "inscritos": 208, "blocos": {"em_pg": 24, "visitou": 10, "acompanhamento": 26, "outro_pg": 5, "sem_resposta_lider": 42, "nao_agora": 0, "aguardando": 101}, "funil_lider": {"com_retorno": 107, "respondeu": 78, "foi": 34, "em_pg": 24}, "espera": {"ate30": 23, "30a90": 20, "mais90": 87, "sem_data": 9}, "ajuda_pastor": 6, "diretos": {"total": 11, "por_pg": [{"pg": "PG Deus Conosco", "n": 5}, {"pg": "PG Casais - Efatá", "n": 4}, {"pg": "PG Adultos e Familia - L", "n": 2}]}};
 
 const fmtPct = (n, d) => d ? Math.round(100 * n / d) : 0;
 // uma casa decimal (pedido do Pr. Gustavo, 13/10: 3,8% em vez de 4%)
@@ -571,6 +599,35 @@ document.getElementById('leadNote').innerHTML =
       `<div class="fun-track"><div style="width:${base ? 100 * v / base : 0}%"></div></div>`;
     box.appendChild(r);
   });
+})();
+
+// ---- extra: entraram via convite
+(function(){
+  const conv = (D.diretos || {total:0}).total, acol = D.inscritos, tot = conv + acol;
+  const fatias = [['Pelo acolhimento (fichas)', acol, 'var(--teal-deep)'], ['Via convite, direto no PG', conv, 'var(--gold)']];
+  const svg = document.getElementById('dirPie'), NS = 'http://www.w3.org/2000/svg';
+  const cx = 80, cy = 46, rx = 74, ry = 40, prof = 18;
+  const pt = (a, y) => `${cx + rx * Math.cos(a)},${y + ry * Math.sin(a)}`;
+  const fatia = (a0, a1, y) => (a1 - a0 >= 2 * Math.PI - 1e-6)
+    ? `M${cx - rx},${y}A${rx},${ry} 0 1 1 ${cx + rx},${y}A${rx},${ry} 0 1 1 ${cx - rx},${y}Z`
+    : `M${cx},${y}L${pt(a0, y)}A${rx},${ry} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${pt(a1, y)}Z`;
+  const angs = []; let a = -Math.PI / 2;
+  fatias.forEach(([lbl, v, cor]) => { const b = a + 2 * Math.PI * v / tot; if (v) angs.push([a, b, cor]); a = b; });
+  const lado = document.createElementNS(NS, 'g'); lado.setAttribute('style', 'filter:brightness(.72)');
+  for (let d = prof; d >= 1; d--) angs.forEach(([a0, a1, cor]) => {
+    const p = document.createElementNS(NS, 'path'); p.setAttribute('d', fatia(a0, a1, cy + d)); p.setAttribute('fill', cor); lado.appendChild(p);
+  });
+  svg.appendChild(lado);
+  angs.forEach(([a0, a1, cor]) => {
+    const p = document.createElementNS(NS, 'path'); p.setAttribute('d', fatia(a0, a1, cy)); p.setAttribute('fill', cor);
+    p.setAttribute('stroke', 'var(--paper-raised)'); p.setAttribute('stroke-width', '1'); svg.appendChild(p);
+  });
+  const leg = document.getElementById('dirLeg');
+  fatias.forEach(([lbl, v, cor]) => {
+    leg.appendChild(el('div', 'it', `<i style="background:${cor}"></i><span><b>${num(v)}</b>${lbl} <span class="pc">${pctTxt(v, tot)}</span></span>`));
+  });
+  document.getElementById('dirNote').textContent =
+    `As ${num(conv)} pessoas via convite equivalem a ${pctTxt(conv, acol)} das ${num(acol)} fichas do acolhimento. Em anos anteriores, essa proporção ficava entre 5% e 7%.`;
 })();
 
 // ---- 1 detalhado: cada PG
