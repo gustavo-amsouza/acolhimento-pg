@@ -399,16 +399,11 @@
 
   <!-- extras -->
   <section>
-    <div class="grid2">
+    <div>
       <div class="card">
         <div class="eyebrow" style="margin-bottom:6px;">Do contato do líder até o PG</div>
         <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);" id="funSub"></p>
         <div id="funil"></div>
-      </div>
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:6px;">Há quanto tempo esperam uma anotação</div>
-        <p class="sec-sub" style="margin:0 0 16px; font-size:12.5px; color:var(--ink-soft);" id="waitSub"></p>
-        <div id="wait"></div>
       </div>
     </div>
   </section>
@@ -574,21 +569,6 @@ document.getElementById('leadNote').innerHTML =
     const r = el('div', 'fun-row');
     r.innerHTML = `<div class="fun-top"><span>${lbl}</span><span><b>${num(v)}</b>${i ? `<span class="pct">${pctTxt(v, base)}</span>` : ''}</span></div>` +
       `<div class="fun-track"><div style="width:${base ? 100 * v / base : 0}%"></div></div>`;
-    box.appendChild(r);
-  });
-})();
-
-// ---- extra: espera
-(function(){
-  const w = D.espera, tot = w.ate30 + w['30a90'] + w.mais90 + w.sem_data;
-  document.getElementById('waitSub').textContent = `${num(tot)} encaminhamentos ainda em branco, pela data em que foram enviados ao líder.`;
-  const faixas = [['Até 30 dias', w.ate30], ['De 31 a 90 dias', w['30a90']], ['Mais de 90 dias', w.mais90], ['Sem data na planilha', w.sem_data]];
-  const mx = Math.max(...faixas.map(f => f[1]), 1);
-  const box = document.getElementById('wait');
-  faixas.forEach(([lbl, v]) => {
-    const r = el('div', 'fun-row');
-    r.innerHTML = `<div class="fun-top"><span>${lbl}</span><span><b>${num(v)}</b><span class="pct">${pctTxt(v, tot)}</span></span></div>` +
-      `<div class="wait-track"><div style="width:${100 * v / mx}%"></div></div>`;
     box.appendChild(r);
   });
 })();
