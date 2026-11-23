@@ -1,4 +1,4 @@
-<title>Acolhimento PG</title>
+<title>Acolhimento PG · Natal</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..600&family=Work+Sans:wght@400;500;600;700&display=swap');
 
@@ -186,6 +186,124 @@
     margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
     font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
   }
+
+  /* ===== Natal · versão 2 — Coroa do Advento (vermelho natalino, pinheiro e ouro) ===== */
+  :root{
+    --paper:#F4E1DD; --paper-raised:#FFFFFF;
+    --ink:#2A1416; --ink-soft:#6A4A4D;
+    --line:#EBD3CE; --line-strong:#DDB9B2;
+    --teal-deep:#1F4D3A; --teal-mid:#4E7564; --teal-tint:#F6E9E6;
+    --gold:#9C6F17; --gold-tint:#F6E7C8;
+    --wine:#9B1C26; --red-deep:#7E121C; --red-dark:#5A0B12; --pine:#1F4D3A; --pine-2:#2E6B4F;
+    --wax:#FBF5E8; --wax-shade:#E7DCC4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1B0C0E; --paper-raised:#261315;
+      --ink:#F3E9E7; --ink-soft:#C3A7A9;
+      --line:#3A1F22; --line-strong:#52302F;
+      --teal-deep:#7CC0A0; --teal-mid:#86A898; --teal-tint:#331A1D;
+      --gold:#E2B85C; --gold-tint:#33270F;
+      --wine:#E5717C; --red-deep:#6E0F18; --red-dark:#3E070D; --pine:#3E8C66; --pine-2:#58A67F;
+      --wax:#EFE6D2; --wax-shade:#CFC2A6;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B0C0E; --paper-raised:#261315;
+    --ink:#F3E9E7; --ink-soft:#C3A7A9;
+    --line:#3A1F22; --line-strong:#52302F;
+    --teal-deep:#7CC0A0; --teal-mid:#86A898; --teal-tint:#331A1D;
+    --gold:#E2B85C; --gold-tint:#33270F;
+    --wine:#E5717C; --red-deep:#6E0F18; --red-dark:#3E070D; --pine:#3E8C66; --pine-2:#58A67F;
+    --wax:#EFE6D2; --wax-shade:#CFC2A6;
+  }
+
+  /* cabeçalho vermelho, de ponta a ponta do cartão */
+  .masthead{
+    border:none; border-radius:14px; padding:30px 30px 24px;
+    color:#FBEFE9; box-shadow:var(--shadow);
+    background:
+      radial-gradient(90% 120% at 100% 0%, rgba(255,214,140,.16), transparent 55%),
+      linear-gradient(160deg, var(--red-deep) 0%, var(--red-dark) 100%);
+    border-bottom:4px solid var(--gold);
+  }
+  .masthead .eyebrow{color:#F2CF86;}
+  .masthead h1{font-size:36px; color:#FFFFFF;}
+  .masthead .lead{margin:0; color:#F1D3CF; font-size:14.5px; max-width:52ch;}
+  .masthead .refresh-badge{color:#F1D3CF;}
+  .masthead .refresh-badge strong{color:#FFFFFF;}
+  .countdown{margin-top:14px; display:inline-flex; align-items:baseline; gap:8px;
+    background:rgba(255,255,255,.12); color:#FFFFFF; border:1px solid rgba(242,207,134,.45);
+    border-radius:999px; padding:6px 14px; font-size:13px;}
+  .countdown .num{font-size:20px; font-weight:560; color:#F2CF86;}
+
+  /* velas */
+  .advent{display:flex; gap:12px; align-items:flex-end; padding-bottom:2px;}
+  .candle{display:flex; flex-direction:column; align-items:center; width:68px;}
+  .candle svg.flame{width:26px; height:44px; overflow:visible; transform-origin:50% 100%;}
+  .candle .halo{opacity:0;}
+  .candle:not(.lit) .fl{display:none;}
+  .candle.lit .halo{opacity:1;}
+  .candle.lit svg.flame{animation:tremula 2.6s ease-in-out infinite;}
+  .candle.lit .fl-out{animation:danca 1.7s ease-in-out infinite; transform-origin:13px 40px;}
+  @keyframes tremula{0%,100%{transform:scale(1,1)} 30%{transform:scale(.96,1.04)} 60%{transform:scale(1.03,.97)}}
+  @keyframes danca{0%,100%{transform:skewX(0)} 25%{transform:skewX(3deg)} 75%{transform:skewX(-3deg)}}
+  @media (prefers-reduced-motion: reduce){ .candle.lit svg.flame, .candle.lit .fl-out{animation:none;} }
+  .candle .body{position:relative; width:24px; height:var(--h,54px); border-radius:2px 2px 3px 3px;
+    background:linear-gradient(90deg, rgba(255,255,255,.22) 0 22%, transparent 45%, rgba(0,0,0,.18) 100%), var(--cc, var(--wax));}
+  .candle .body::before{content:""; position:absolute; left:-1px; right:-1px; top:-3px; height:7px; border-radius:50%;
+    background:var(--cc, var(--wax)); filter:brightness(1.12);}
+  .candle .body::after{content:""; position:absolute; left:4px; top:2px; width:5px; height:14px; border-radius:0 0 4px 4px;
+    background:var(--cc, var(--wax)); filter:brightness(1.12);}
+  .candle.c-wine{--cc:#D9A43F;} .candle.c-pine{--cc:#1F4D3A;} .candle.c-white{--cc:var(--wax);}
+  .candle.c-white .body{border:1px solid var(--wax-shade);}
+  .candle .cl{margin-top:8px; font-size:11px; font-weight:600; color:#FFFFFF; text-align:center; line-height:1.2;}
+  .candle .cd{font-size:10.5px; color:#F1D3CF; text-align:center;}
+  .candle .cr{margin-top:3px; font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:11.5px; color:#F2CF86; text-align:center; white-space:nowrap;}
+  .advent-base{height:6px; border-radius:3px; background:linear-gradient(90deg,#2E6B4F,#1F4D3A); margin-top:-34px; position:relative; z-index:-1;}
+
+  /* versículos — mesma arte da versão 1, em vermelho e ouro */
+  .masthead{display:block;}
+  .mast-top{display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;}
+  .ornament{display:flex; align-items:center; gap:14px; margin:24px 0 4px; color:#F2CF86; font-size:14px;}
+  .ornament span{flex:1; height:1px; background:linear-gradient(90deg, transparent, rgba(242,207,134,.55), transparent);}
+  .verse{margin:10px auto 0; max-width:62ch; text-align:center;
+    font-family:'Fraunces', Georgia, serif; font-style:italic; font-size:19px; line-height:1.5; color:#F8E9C9;}
+  .verse cite{display:block; margin-top:8px; font-family:'Work Sans',sans-serif; font-style:normal;
+    font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:#F2CF86;}
+  .masthead .refresh-badge{justify-content:center; text-align:center; margin-top:18px; white-space:normal;}
+  .verse-foot-card{flex-basis:100%; text-align:center; padding:26px 22px 22px; border-radius:12px; color:#F8E9C9;
+    background:radial-gradient(90% 120% at 50% 0%, rgba(255,214,140,.14), transparent 60%), linear-gradient(160deg, var(--red-deep), var(--red-dark));
+    border-top:3px solid var(--gold); box-shadow:var(--shadow);
+    font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:17px; line-height:1.5;}
+  .verse-foot-card .orn{display:block; color:#F2CF86; font-style:normal; font-size:13px; margin-bottom:8px; letter-spacing:.4em;}
+  .verse-foot-card b{display:block; margin-top:8px; font-style:normal; font-family:'Work Sans',sans-serif; font-size:11px;
+    letter-spacing:.12em; text-transform:uppercase; color:#F2CF86; font-weight:600;}
+  .funil .tile.accent .num{color:var(--pine);}
+  .funil .tile:nth-child(odd)::before, .funil .tile:nth-child(even)::before{content:""; position:absolute; left:18px; top:0; width:26px; height:3px;}
+  .funil .tile:nth-child(odd)::before{background:var(--wine);}
+  .funil .tile:nth-child(even)::before{background:var(--pine);}
+  .sec-head h2{border-bottom:2px solid var(--line-strong); padding-bottom:4px;}
+  footer .verse-foot{flex-basis:100%; font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:14px; color:var(--ink);}
+  footer .verse-foot b{font-style:normal; font-family:'Work Sans',sans-serif; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--wine); font-weight:600; margin-left:6px;}
+  @media (max-width:680px){
+    .masthead{padding:24px 18px 20px;}
+    .mast-top > div{min-width:0;}
+    .masthead .refresh-badge{white-space:normal;}
+    .advent{gap:4px; width:100%; justify-content:space-between;}
+    .candle{width:auto; flex:1;}
+    .masthead h1{font-size:28px;}
+    .funil{grid-template-columns:repeat(2,1fr);}
+    .mast-top{flex-direction:column; align-items:stretch; gap:14px;}
+    .countdown{display:flex; width:fit-content; margin:14px auto 0;}
+    .mast-top .advent{order:-1; align-self:center; width:auto; gap:4px; justify-content:center;}
+    .mast-top .candle{flex:none; width:50px;}
+    .candle svg.flame{width:17px; height:29px;}
+    .candle .body{width:15px; height:calc(var(--h,54px) * .6);}
+    .candle .cl{font-size:10px; margin-top:6px;} .candle .cd{font-size:9.5px;} .candle .cr{font-size:10.5px;}
+    .verse{font-size:16.5px;}
+    .verse-foot-card{font-size:15.5px;}
+  }
 </style>
 
 <div class="wrap">
@@ -233,14 +351,23 @@
 
 
   <div class="masthead">
-    <div>
-      <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos</div>
-      <h1>Acolhimento PG</h1>
-      <p>Painel público do funil de inscritos em "Faça Parte de um Pequeno Grupo" — da inscrição até a entrega a um líder.</p>
+    <div class="mast-top">
+      <div>
+        <div class="eyebrow">Igreja Batista Morumbi &middot; Pequenos Grupos &middot; Advento 2026</div>
+        <h1>Acolhimento PG</h1>
+        <p class="lead">Painel público do funil de inscritos em "Faça Parte de um Pequeno Grupo", da inscrição até a entrega a um líder.</p>
+        <div class="countdown" id="countdown"></div>
+      </div>
+      <div class="advent" id="advent" aria-label="Velas do Advento"></div>
     </div>
+    <div class="ornament" aria-hidden="true"><span></span>&#10022;<span></span></div>
+    <blockquote class="verse">
+      &ldquo;E o Verbo se fez carne e habitou entre nós, cheio de graça e de verdade, e vimos a sua glória, glória como do unigênito do Pai.&rdquo;
+      <cite>João 1.14</cite>
+    </blockquote>
     <div class="refresh-badge">
-      <span class="refresh-dot"></span>
-      <span>Atualizado em <strong id="snapshotDate">—</strong><br>Próxima atualização: toda sexta-feira</span>
+      <span class="refresh-dot" style="background:#F2CF86"></span>
+      <span>Atualizado em <strong id="snapshotDate">—</strong> &middot; próxima atualização: toda sexta-feira</span>
     </div>
   </div>
 
@@ -347,6 +474,7 @@
   </section>
 
   <footer>
+    <div class="verse-foot-card"><span class="orn">&#10022; &#10022; &#10022;</span>&ldquo;Eis aqui vos trago boa-nova de grande alegria, que o será para todo o povo: é que hoje vos nasceu, na cidade de Davi, o Salvador, que é Cristo, o Senhor.&rdquo;<b>Lucas 2.10-11</b></div>
     <span>Fonte: base de acolhimento de Pequenos Grupos, Ibmorumbi. Números agregados — nenhum dado pessoal de inscrito aparece nesta página.</span>
     <span id="footRefresh"></span>
   </footer>
@@ -354,7 +482,7 @@
 </div>
 
 <script>
-const DATA = {"funil": {"total": 237, "com_lider": 223, "sem_lider": 0, "sem_pg": 3, "sem_resposta": 11}, "interesse": [{"label": "Adultos", "value": 105}, {"label": "Mulheres", "value": 79}, {"label": "Família", "value": 61}, {"label": "Jovens", "value": 58}, {"label": "PG solteiros, divorciados e viúvos", "value": 54}, {"label": "Casais", "value": 43}, {"label": "Esportivo", "value": 41}, {"label": "Casais Jovens", "value": 28}, {"label": "Homens", "value": 21}, {"label": "Noivos", "value": 4}], "faixa_etaria": [{"label": "Até 20 anos", "value": 7}, {"label": "21 a 30 anos", "value": 44}, {"label": "31 a 40 anos", "value": 73}, {"label": "41 a 50 anos", "value": 45}, {"label": "51+ anos", "value": 29}], "como_soube": [{"label": "Culto", "value": 164}, {"label": "App", "value": 46}, {"label": "Indicação", "value": 38}, {"label": "Instagram", "value": 24}, {"label": "Site/Outros", "value": 9}, {"label": "WhatsApp", "value": 6}], "melhores_dias": [{"label": "Domingo", "value": 81}, {"label": "Segunda-feira", "value": 59}, {"label": "Terça-feira", "value": 77}, {"label": "Quarta-feira", "value": 110}, {"label": "Quinta-feira", "value": 90}, {"label": "Sexta-feira", "value": 110}, {"label": "Sábado", "value": 126}], "perfil": {"com_filhos": 129, "com_filhos_pct": 0.5443037974683544, "fez_membresia": 65, "fez_membresia_pct": 0.2742616033755274, "sao_paulo": 182, "sao_paulo_pct": 0.7679324894514767}, "resumo": {"pessoas_atendidas": 565}, "geografia": [{"regiao": "Morumbi / Vila Andrade (sede)", "inscritos": 76, "dist_km": 0}, {"regiao": "Paraisópolis / Vila Sônia", "inscritos": 12, "dist_km": 1.9}, {"regiao": "Campo Limpo / Capão Redondo / Jd. São Luís", "inscritos": 31, "dist_km": 4.3}, {"regiao": "Santo Amaro / Brooklin / Jabaquara", "inscritos": 28, "dist_km": 4.9}, {"regiao": "Butantã / Jaguaré (Zona Oeste)", "inscritos": 11, "dist_km": 5.8}, {"regiao": "Taboão da Serra", "inscritos": 17, "dist_km": 6.4}, {"regiao": "Interlagos / Grajaú / Guarapiranga", "inscritos": 4, "dist_km": 7.6}, {"regiao": "Outras regiões de SP", "inscritos": 6, "dist_km": 9.7}, {"regiao": "Embu / Itapecerica da Serra", "inscritos": 2, "dist_km": 12.7}, {"regiao": "Barueri / Alphaville", "inscritos": 2, "dist_km": 18}, {"regiao": "Cotia", "inscritos": 1, "dist_km": 19.5}, {"regiao": "Bairro não informado", "inscritos": 17, "dist_km": null}, {"regiao": "Verificar endereço", "inscritos": 30, "dist_km": null}], "perfil_mes": [{"mes": "Janeiro (estimativa)", "casal": 9, "solteiro": 7, "sem_info": 0, "estimativa": true}, {"mes": "Fevereiro (estimativa)", "casal": 12, "solteiro": 9, "sem_info": 1, "estimativa": true}, {"mes": "Março", "casal": 19, "solteiro": 16, "sem_info": 0, "estimativa": false}, {"mes": "Abril", "casal": 11, "solteiro": 21, "sem_info": 1, "estimativa": false}, {"mes": "Maio", "casal": 16, "solteiro": 13, "sem_info": 0, "estimativa": false}, {"mes": "Junho", "casal": 19, "solteiro": 11, "sem_info": 1, "estimativa": false}, {"mes": "Julho", "casal": 20, "solteiro": 13, "sem_info": 1, "estimativa": false}, {"mes": "Agosto", "casal": 18, "solteiro": 10, "sem_info": 1, "estimativa": false}, {"mes": "Setembro", "casal": 15, "solteiro": 7, "sem_info": 1, "estimativa": false}, {"mes": "Outubro", "casal": 11, "solteiro": 5, "sem_info": 2, "estimativa": false}, {"mes": "Novembro", "casal": 0, "solteiro": 0, "sem_info": 0, "estimativa": false}], "weekly": [{"month_label": "jan (16) — estimativa", "month_key": "jan", "count": 2, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 6, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 7, "estimativa": true}, {"month_label": "fev (22) — estimativa", "month_key": "fev", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": "mar (37)", "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 16, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 5, "estimativa": false}, {"month_label": "abr (32)", "month_key": "abr", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 12, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": "mai (30)", "month_key": "mai", "count": 2, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 11, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 6, "estimativa": false}, {"month_label": "jun (30)", "month_key": "jun", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 10, "estimativa": false}, {"month_label": "jul (35)", "month_key": "jul", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 14, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 9, "estimativa": false}, {"month_label": "ago (27)", "month_key": "ago", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": "set (24)", "month_key": "set", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 9, "estimativa": false}, {"month_label": "out (17)", "month_key": "out", "count": 5, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 1, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 4, "estimativa": false}, {"month_label": "nov (0)", "month_key": "nov", "count": 0, "estimativa": false}], "snapshot_date_br": "01/11/2026", "snapshot_date_iso": "2026-11-01"};
+const DATA = {"funil": {"total": 242, "com_lider": 228, "sem_lider": 0, "sem_pg": 3, "sem_resposta": 11}, "interesse": [{"label": "Adultos", "value": 109}, {"label": "Mulheres", "value": 81}, {"label": "Família", "value": 62}, {"label": "Jovens", "value": 58}, {"label": "PG solteiros, divorciados e viúvos", "value": 55}, {"label": "Casais", "value": 44}, {"label": "Esportivo", "value": 41}, {"label": "Casais Jovens", "value": 28}, {"label": "Homens", "value": 22}, {"label": "Noivos", "value": 4}], "faixa_etaria": [{"label": "Até 20 anos", "value": 7}, {"label": "21 a 30 anos", "value": 44}, {"label": "31 a 40 anos", "value": 73}, {"label": "41 a 50 anos", "value": 45}, {"label": "51+ anos", "value": 29}], "como_soube": [{"label": "Culto", "value": 168}, {"label": "App", "value": 46}, {"label": "Indicação", "value": 39}, {"label": "Instagram", "value": 24}, {"label": "Site/Outros", "value": 9}, {"label": "WhatsApp", "value": 6}], "melhores_dias": [{"label": "Domingo", "value": 81}, {"label": "Segunda-feira", "value": 61}, {"label": "Terça-feira", "value": 79}, {"label": "Quarta-feira", "value": 113}, {"label": "Quinta-feira", "value": 91}, {"label": "Sexta-feira", "value": 112}, {"label": "Sábado", "value": 128}], "perfil": {"com_filhos": 133, "com_filhos_pct": 0.5495867768595041, "fez_membresia": 65, "fez_membresia_pct": 0.26859504132231404, "sao_paulo": 187, "sao_paulo_pct": 0.7727272727272727}, "resumo": {"pessoas_atendidas": 582}, "geografia": [{"regiao": "Morumbi / Vila Andrade (sede)", "inscritos": 80, "dist_km": 0}, {"regiao": "Paraisópolis / Vila Sônia", "inscritos": 12, "dist_km": 1.9}, {"regiao": "Campo Limpo / Capão Redondo / Jd. São Luís", "inscritos": 31, "dist_km": 4.3}, {"regiao": "Santo Amaro / Brooklin / Jabaquara", "inscritos": 29, "dist_km": 4.9}, {"regiao": "Butantã / Jaguaré (Zona Oeste)", "inscritos": 11, "dist_km": 5.8}, {"regiao": "Taboão da Serra", "inscritos": 17, "dist_km": 6.4}, {"regiao": "Interlagos / Grajaú / Guarapiranga", "inscritos": 4, "dist_km": 7.6}, {"regiao": "Outras regiões de SP", "inscritos": 6, "dist_km": 9.7}, {"regiao": "Embu / Itapecerica da Serra", "inscritos": 2, "dist_km": 12.7}, {"regiao": "Barueri / Alphaville", "inscritos": 2, "dist_km": 18}, {"regiao": "Cotia", "inscritos": 1, "dist_km": 19.5}, {"regiao": "Bairro não informado", "inscritos": 17, "dist_km": null}, {"regiao": "Verificar endereço", "inscritos": 30, "dist_km": null}], "perfil_mes": [{"mes": "Janeiro (estimativa)", "casal": 9, "solteiro": 6, "sem_info": 1, "estimativa": true}, {"mes": "Fevereiro (estimativa)", "casal": 12, "solteiro": 9, "sem_info": 1, "estimativa": true}, {"mes": "Março", "casal": 19, "solteiro": 16, "sem_info": 0, "estimativa": false}, {"mes": "Abril", "casal": 11, "solteiro": 21, "sem_info": 1, "estimativa": false}, {"mes": "Maio", "casal": 16, "solteiro": 13, "sem_info": 0, "estimativa": false}, {"mes": "Junho", "casal": 19, "solteiro": 11, "sem_info": 1, "estimativa": false}, {"mes": "Julho", "casal": 20, "solteiro": 13, "sem_info": 1, "estimativa": false}, {"mes": "Agosto", "casal": 18, "solteiro": 10, "sem_info": 1, "estimativa": false}, {"mes": "Setembro", "casal": 15, "solteiro": 7, "sem_info": 1, "estimativa": false}, {"mes": "Outubro", "casal": 11, "solteiro": 5, "sem_info": 2, "estimativa": false}, {"mes": "Novembro", "casal": 5, "solteiro": 0, "sem_info": 0, "estimativa": false}], "weekly": [{"month_label": "jan (16) — estimativa", "month_key": "jan", "count": 2, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 6, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "jan", "count": 7, "estimativa": true}, {"month_label": "fev (22) — estimativa", "month_key": "fev", "count": 1, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": null, "month_key": "fev", "count": 7, "estimativa": true}, {"month_label": "mar (37)", "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 16, "estimativa": false}, {"month_label": null, "month_key": "mar", "count": 5, "estimativa": false}, {"month_label": "abr (32)", "month_key": "abr", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 12, "estimativa": false}, {"month_label": null, "month_key": "abr", "count": 6, "estimativa": false}, {"month_label": "mai (30)", "month_key": "mai", "count": 2, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 11, "estimativa": false}, {"month_label": null, "month_key": "mai", "count": 6, "estimativa": false}, {"month_label": "jun (30)", "month_key": "jun", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jun", "count": 10, "estimativa": false}, {"month_label": "jul (35)", "month_key": "jul", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 14, "estimativa": false}, {"month_label": null, "month_key": "jul", "count": 9, "estimativa": false}, {"month_label": "ago (27)", "month_key": "ago", "count": 10, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "ago", "count": 3, "estimativa": false}, {"month_label": "set (24)", "month_key": "set", "count": 3, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 8, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "set", "count": 9, "estimativa": false}, {"month_label": "out (17)", "month_key": "out", "count": 5, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 1, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 7, "estimativa": false}, {"month_label": null, "month_key": "out", "count": 4, "estimativa": false}, {"month_label": "nov (5)", "month_key": "nov", "count": 4, "estimativa": false}, {"month_label": null, "month_key": "nov", "count": 0, "estimativa": false}, {"month_label": null, "month_key": "nov", "count": 1, "estimativa": false}, {"month_label": null, "month_key": "nov", "count": 0, "estimativa": false}], "snapshot_date_br": "22/11/2026", "snapshot_date_iso": "2026-11-22"};
 
 function fmtInt(n){ return new Intl.NumberFormat('pt-BR').format(n); }
 function fmtPct(x){ return (x*100).toLocaleString('pt-BR',{maximumFractionDigits:1}) + '%'; }
@@ -557,5 +685,44 @@ MONTH_ORDER.forEach((m,i)=>{ MONTH_COLOR[m] = `var(--chart-${i+1})`; });
     item.append(monthName[mk] || mk, isEst ? ' (estimativa)' : '');
     legend.appendChild(item);
   });
+})();
+
+// ---- Advento: as cinco velas acesas, com o domingo de cada uma ----
+(function(){
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const ano = hoje.getMonth() === 0 ? hoje.getFullYear() - 1 : hoje.getFullYear();
+  const natal = new Date(ano, 11, 25);
+  // 1º domingo do Advento = 4º domingo antes do Natal
+  const dom4 = new Date(natal); dom4.setDate(natal.getDate() - (natal.getDay() || 7));
+  const velas = [
+    {nome:'Esperança', ref:'Is 9.2', cor:'c-pine', sem:3, h:48},
+    {nome:'Paz', ref:'Rm 5.1', cor:'c-wine', sem:2, h:52},
+    {nome:'Alegria', ref:'Lc 1.46-47', cor:'c-pine', sem:1, h:56},
+    {nome:'Amor', ref:'1Jo 4.9', cor:'c-wine', sem:0, h:60},
+    {nome:'Cristo', ref:'Gl 4.4-5', cor:'c-white',       natal:true, h:72},
+  ];
+  const FLAME_SVG = '<svg class="flame" viewBox="0 0 26 44" aria-hidden="true">'
+    + '<defs><radialGradient id="glow" cx="50%" cy="55%" r="50%"><stop offset="0" stop-color="#FFD27A" stop-opacity=".75"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>'
+    + '<linearGradient id="fo" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E8590C"/><stop offset=".45" stop-color="#F59F00"/><stop offset="1" stop-color="#FFE066"/></linearGradient></defs>'
+    + '<ellipse class="halo" cx="13" cy="24" rx="13" ry="18" fill="url(#glow)"/>'
+    + '<path class="fl fl-out" d="M13 4 C17 13 21 19 21 27 C21 33 17.5 37 13 37 C8.5 37 5 33 5 27 C5 19 10 14 13 4 Z" fill="url(#fo)"/>'
+    + '<path class="fl" d="M13 18 C15 23 16.5 26 16.5 29.5 C16.5 32.5 15 34.5 13 34.5 C11 34.5 9.5 32.5 9.5 29.5 C9.5 26 11 23 13 18 Z" fill="#FFF8E1"/>'
+    + '<ellipse class="fl" cx="13" cy="34" rx="2.4" ry="2" fill="#4DABF7" opacity=".8"/>'
+    + '<rect x="12.2" y="34" width="1.6" height="10" rx=".8" fill="#2B1B12"/></svg>';
+  const fmt = d => d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  const wrap = document.getElementById('advent');
+  velas.forEach(v=>{
+    const d = v.natal ? natal : new Date(dom4.getFullYear(), dom4.getMonth(), dom4.getDate() - 7*v.sem);
+    const c = el('div','candle '+v.cor+' lit');
+    c.style.setProperty('--h', v.h+'px');
+    c.insertAdjacentHTML('beforeend', FLAME_SVG); c.appendChild(el('div','body'));
+    c.appendChild(el('div','cl', v.nome)); c.appendChild(el('div','cd', fmt(d))); c.appendChild(el('div','cr', v.ref));
+    wrap.appendChild(c);
+  });
+  const dias = Math.round((natal - hoje) / 86400000);
+  document.getElementById('countdown').innerHTML =
+    dias > 1 ? '<span class="num">'+dias+'</span> dias para o Natal'
+    : dias === 1 ? '<span class="num">1</span> dia para o Natal'
+    : dias === 0 ? 'Feliz Natal! Cristo nasceu.' : 'Tempo de Natal';
 })();
 </script>
